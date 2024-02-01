@@ -1,0 +1,81 @@
+from flask import Blueprint, jsonify, request
+from flask_login import login_required, current_user
+from app.models import Shop,Product,db
+from app.forms import ProductForm,ShopForm
+
+product_routes = Blueprint('product', __name__)
+
+#get all products
+@product_routes.route('/',methods=['GET'])
+def get_all_product():
+    products = Product.query.all()
+    products_dict = [product.to_dict() for product in products]
+    return {'Products': products_dict}
+
+
+#create a product for specify shopId
+@product_routes.route('/new',methods=['POST'])
+@login_required
+def create_product():
+
+    form = ProductForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        shop = Shop.query.filter_by(id = form.shop_id.data,user_id=current_user.id).first()
+        if not shop:
+            return {"errors": {"message": "Product couldn't be found"}}, 404
+
+        product = Product(
+            shop_id = form.shop_id.data,
+            product_name=form.product_name.data,
+            price=form.price.data,
+            desc=form.desc.data,
+            image1=form.image1.data,
+            image2=form.image2.data if form.image2.data else None,
+            categorie=form.categorie.data,
+        )
+        db.session.add(product)
+        db.session.commit()
+        new_product = product.to_dict()
+        return {'Product':new_product}
+    else:
+        return form.errors,401
+
+#update a product
+@product_routes.route('/update/<int:id>',methods=['PUT'])
+@login_required
+def update_productname(id):
+    form =  ProductForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    product = Product.query.get(id)
+    if product and product.shop.user_id == current_user.id:
+        if form.validate_on_submit():
+            product.product_name = form.data["product_name"]
+            product.price = form.data["price"]
+            product.desc = form.data["desc"]
+            product.image1 = form.data["image1"]
+            product.image2 = form.data["image2"]
+            product.categorie = form.data["categorie"]
+
+            db.session.commit()
+            return product.to_dict()
+        return form.errors, 401
+    return redirect('api/auth/unauthorized')
+
+
+#delete a product
+@product_routes.route('/<int:id>',methods=['DELETE'])
+@login_required
+def delete_shop(id):
+    product = Product.query.get(id)
+
+    if not product:
+        return {"errors": {"message": "product couldn't be found"}}, 404
+    product_to_delete = product.to_dict()
+    if product and product.shop.user_id == current_user.id:
+        db.session.delete(product)
+        db.session.commit()
+        return {"message": "Successfully deleted"}
+    return {'errors': {'message': 'Unauthorized'}}, 401
+

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Shop,db
+from app.models import Shop,db,Product
 from app.forms import ShopForm
 
 shop_routes = Blueprint('shop', __name__)
@@ -9,10 +9,8 @@ shop_routes = Blueprint('shop', __name__)
 @shop_routes.route('/',methods=['GET'])
 @login_required
 def get_all_shop():
-    # current_app.logger.info('This is an info message')
     shops = Shop.query.all()
     shops_dict = [shop.to_dict() for shop in shops]
-    # print('**************',shops_dict)
     return {'shops': shops_dict}
 
 #get shop by userId
@@ -78,4 +76,11 @@ def delete_shop(id):
         db.session.delete(shop)
         db.session.commit()
         return {"message": "Successfully deleted"}
+    return {'errors': {'message': 'Unauthorized'}}, 401
 
+#get products by shopId
+@shop_routes.route('/<int:shop_id>/product',methods=['GET'])
+@login_required
+def get_product_by_shopId(shop_id):
+    products = Product.query.filter_by(shop_id=shop_id).all()
+    return {'products': [product.to_dict() for product in products]}

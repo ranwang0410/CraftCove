@@ -2,7 +2,7 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
-import "./LoginForm.css";
+import "./LoginForm.css"
 
 function LoginFormPage() {
   const navigate = useNavigate();
@@ -24,16 +24,15 @@ function LoginFormPage() {
       })
     );
 
-    if (serverResponse) {
-      setErrors(serverResponse);
-    } else {
-      navigate("/");
+    if(serverResponse && !serverResponse.errors){
+      navigate('/')
+    }else{
+      setErrors(serverResponse)
     }
   };
 
   return (
     <>
-      <h1>Log In</h1>
       {errors.length > 0 &&
         errors.map((message) => <p key={message}>{message}</p>)}
       <form onSubmit={handleSubmit}>

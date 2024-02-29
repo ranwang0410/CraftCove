@@ -1,0 +1,80 @@
+.loginmodal-content {
+    width: 400px;
+    background-color: white;
+    padding:20px 20px;
+    border-radius: 50px;
+    z-index: 1051;
+  }
+
+  .loginmodal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .loginmodal-body {
+    margin-top:5px;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+  .form-group input {
+    width: 100%;
+    padding:5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .error {
+    color: red;
+    font-size: 0.8rem;
+  }
+
+  .btn-submit {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin:8px;
+    border-radius: 50px;
+
+  }
+
+  .btn-submit:hover {
+    background-color: rgb(49, 48, 48);
+  }
+
+  .demo-button{
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin:8px;
+    border-radius: 50px;
+
+  }
+  .demo-button:hover {
+    background-color: rgb(49, 48, 48);
+  }
+  .register-button{
+    background-color: white;
+    color: black;
+    border: black solid 1px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 30%;
+    margin:8px;
+    border-radius: 50px;
+    transition: border-width 0.2s ease
+  }
+
+  .register-button:hover{
+    border-width: 2px;
+  }

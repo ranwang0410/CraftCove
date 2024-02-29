@@ -3,74 +3,74 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+import './ProfileButton.css'
 
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const user = useSelector((store) => store.session.user);
+  const user = useSelector((state) => state.session.user);
   const ulRef = useRef();
 
-  const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    setShowMenu(!showMenu);
-  };
-
   useEffect(() => {
-    if (!showMenu) return;
-
-    const closeMenu = (e) => {
-      if (ulRef.current && !ulRef.current.contains(e.target)) {
+    const handleClickOutside = (event) => {
+      if (ulRef.current && !ulRef.current.contains(event.target)) {
         setShowMenu(false);
       }
     };
 
-    document.addEventListener("click", closeMenu);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-    return () => document.removeEventListener("click", closeMenu);
-  }, [showMenu]);
-
-  const closeMenu = () => setShowMenu(false);
-
+  const closeMenu = (e) => {
+    if (ulRef.current && !ulRef.current.contains(e.target)) {
+      setShowMenu(false);
+    }
+  };
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
-    closeMenu();
+    setShowMenu(false);
   };
 
   return (
-    <>
-      <button onClick={toggleMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
-          {user ? (
-            <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
-                <button onClick={logout}>Log Out</button>
-              </li>
-            </>
-          ) : (
-            <>
-              <OpenModalMenuItem
-                itemText="Log In"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-              <OpenModalMenuItem
-                itemText="Sign Up"
-                onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
-              />
-            </>
-          )}
-        </ul>
-      )}
-    </>
+    <div className="container">
+      <div ref={ulRef}>
+        {user ? (
+          <>
+            <button onClick={() => setShowMenu(!showMenu)}>
+              <i className="fas fa-user-circle" />
+              <i className="fas fa-caret-down" />
+            </button>
+            {showMenu && (
+              <div className="profile-dropdown">
+                <ul>
+                  <li>{user.username}</li>
+                  <li>{user.email}</li>
+                  <li>
+                    <button onClick={logout}>Sign Out</button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            <OpenModalMenuItem
+              itemText="Sign in"
+              onItemClick={closeMenu}
+              modalComponent={<LoginFormModal />}
+            />
+          </>
+
+        )}
+        <div className="shopping-cart-icon">
+          <i className="fas fa-shopping-cart"></i>
+        </div>
+      </div>
+    </div>
   );
 }
 
 export default ProfileButton;
+

@@ -38,10 +38,11 @@ def create_shop():
         )
         db.session.add(shop)
         db.session.commit()
-        new_shop = shop.to_dict()
-        return {'shop':new_shop}
+        # new_shop = shop.to_dict()
+        # return {'shop':new_shop}
+        return jsonify({'shop': shop.to_dict()}), 201
     else:
-        return form.errors,401
+        return jsonify({'errors': form.errors}), 400
 
 #update a shop name
 @shop_routes.route('/update/<int:id>',methods=['PUT'])

@@ -4,7 +4,7 @@ import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import './ProfileButton.css'
-
+import {NavLink} from 'react-router-dom'
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -17,15 +17,12 @@ function ProfileButton() {
         setShowMenu(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const closeMenu = (e) => {
-    if (ulRef.current && !ulRef.current.contains(e.target)) {
+  const closeMenu = () => {
       setShowMenu(false);
-    }
   };
   const logout = (e) => {
     e.preventDefault();
@@ -48,7 +45,7 @@ function ProfileButton() {
                   <li>{user.username}</li>
                   <li>{user.email}</li>
                   <li>
-                    <button onClick={logout}>Sign Out</button>
+                    <button onClick={(e) => logout(e)}><NavLink to ='/'>Sign Out</NavLink></button>
                   </li>
                 </ul>
               </div>
@@ -64,9 +61,7 @@ function ProfileButton() {
           </>
 
         )}
-        <div className="shopping-cart-icon">
-          <i className="fas fa-shopping-cart"></i>
-        </div>
+
       </div>
     </div>
   );

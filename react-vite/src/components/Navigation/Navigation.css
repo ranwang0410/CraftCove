@@ -4,9 +4,10 @@
 
 .navcontainer {
   display: flex;
-
   list-style: none;
-  margin:50px 100px
+  margin:50px 100px;
+  align-items: center;
+  justify-content: space-around;
 }
 
 li {
@@ -30,4 +31,18 @@ li {
   z-index: 1050;
 }
 
+.search-form{
+  flex: 0 1 60%;
+  display: flex;
+  justify-content: center;
+}
 
+.search-input {
+  flex: 1;
+  margin-right: 8px;
+  border:2px solid black;
+
+}
+.landing-right{
+  display: flex;
+}

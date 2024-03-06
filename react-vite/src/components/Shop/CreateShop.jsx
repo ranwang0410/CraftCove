@@ -1,21 +1,26 @@
 import {  useState } from "react";
 import { useDispatch } from 'react-redux';
 import { fetchShopsByUserId,createShop} from '../../redux/shop';
+import { useNavigate } from "react-router-dom";
 
 export default function CreateShop(){
     const dispatch = useDispatch()
     const [shopName, setShopName] = useState('')
-
-    // const [errors,setErrors] = useState({})//add error message later
+    const navigate = useNavigate();
+    const [error,setError] = useState('')
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        dispatch(createShop({shopname:shopName}))
-        .then(()=>{
-            dispatch(fetchShopsByUserId());
-        })
-        .catch((error)=>{
-            console.error('Failed to create a shop',error)
-        })
+        try {
+
+            await dispatch(createShop({ shopname: shopName }));
+            await dispatch(fetchShopsByUserId());
+
+            navigate('/store');
+        } catch (error) {
+            console.error('Failed to create a shop', error);
+            setError(error.message);
+            setError('The shop name is existed')
+        }
         setShopName('')
     }
 
@@ -32,6 +37,7 @@ export default function CreateShop(){
                     required
                 />
                 <button type="submit" >Create Shop</button>
+                {error && <div style={{ color: 'red' }}>{error}</div>}
             </form>
         </div>
     )

@@ -12,11 +12,20 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     shop_id = db.Column(db.Integer, db.ForeignKey(Shop.id))
-    product_name = db.Column(db.String(40), nullable=False, unique=True)
+    product_name = db.Column(db.String(225), nullable=False, unique=True)
     price = db.Column(db.Float, nullable=False)
     desc = db.Column(db.String(512))
     image1 = db.Column(db.String(255),nullable=False)
     image2 = db.Column(db.String(255))
+    image3 = db.Column(db.String(255))
+    image4 = db.Column(db.String(255))
+    image5 = db.Column(db.String(255))
+    image6 = db.Column(db.String(255))
+    image7 = db.Column(db.String(255))
+    image8 = db.Column(db.String(255))
+    image9 = db.Column(db.String(255))
+
+
     categorie = db.Column(db.String(255),nullable=False)
 
     created_at = db.Column(db.DateTime, default=datetime.now)
@@ -38,6 +47,14 @@ class Product(db.Model):
             'desc': self.desc,
             'image1': self.image1,
             'image2': self.image2,
+            'image2': self.image2,
+            'image3': self.image3,
+            'image4': self.image4,
+            'image5': self.image5,
+            'image6': self.image6,
+            'image7': self.image7,
+            'image8': self.image8,
+            'image9': self.image9,
             'categorie': self.categorie,
             'created_at': self.created_at,
             'updated_at': self.updated_at

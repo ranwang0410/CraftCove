@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 1dfbf27979ea
+Revision ID: c83e3eac6706
 Revises: 
-Create Date: 2024-02-29 04:17:56.691425
+Create Date: 2024-03-06 17:51:25.561161
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1dfbf27979ea'
+revision = 'c83e3eac6706'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -49,11 +49,18 @@ def upgrade():
     op.create_table('products',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('shop_id', sa.Integer(), nullable=True),
-    sa.Column('product_name', sa.String(length=40), nullable=False),
+    sa.Column('product_name', sa.String(length=225), nullable=False),
     sa.Column('price', sa.Float(), nullable=False),
     sa.Column('desc', sa.String(length=512), nullable=True),
     sa.Column('image1', sa.String(length=255), nullable=False),
     sa.Column('image2', sa.String(length=255), nullable=True),
+    sa.Column('image3', sa.String(length=255), nullable=True),
+    sa.Column('image4', sa.String(length=255), nullable=True),
+    sa.Column('image5', sa.String(length=255), nullable=True),
+    sa.Column('image6', sa.String(length=255), nullable=True),
+    sa.Column('image7', sa.String(length=255), nullable=True),
+    sa.Column('image8', sa.String(length=255), nullable=True),
+    sa.Column('image9', sa.String(length=255), nullable=True),
     sa.Column('categorie', sa.String(length=255), nullable=False),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),

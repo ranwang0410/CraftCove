@@ -14,7 +14,7 @@ def get_all_product():
 
 
 #create a product for specify shopId
-@product_routes.route('/new',methods=['POST'])
+@product_routes.route('/newproduct',methods=['POST'])
 @login_required
 def create_product():
 
@@ -45,6 +45,7 @@ def create_product():
 @product_routes.route('/update/<int:id>',methods=['PUT'])
 @login_required
 def update_productname(id):
+    # print(f"Update request received for product ID: {id}")
     form =  ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -78,4 +79,15 @@ def delete_shop(id):
         db.session.commit()
         return {"message": "Successfully deleted"}
     return {'errors': {'message': 'Unauthorized'}}, 401
+
+
+#get product by product id
+@product_routes.route('/<int:product_id>')
+def get_product(product_id):
+    product = Product.query.get(product_id)
+    if product:
+        return jsonify(product.to_dict())
+    else:
+        return jsonify({'error': 'Product not found'}), 404
+
 

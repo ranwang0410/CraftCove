@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
 from .user import User
 
+
 class Shop(db.Model):
     print('this is shop model')
     __tablename__ = 'shops'
@@ -12,6 +13,7 @@ class Shop(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
     shopname = db.Column(db.String(40), nullable=False, unique=True)
+
     created_at = db.Column(db.DateTime, default=datetime.now)
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
@@ -21,6 +23,7 @@ class Shop(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
+
             'user_id': self.user_id,
             'user': self.user.to_dict(),
             'shopname': self.shopname,

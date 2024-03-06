@@ -38,8 +38,7 @@ def create_shop():
         )
         db.session.add(shop)
         db.session.commit()
-        # new_shop = shop.to_dict()
-        # return {'shop':new_shop}
+
         return jsonify({'shop': shop.to_dict()}), 201
     else:
         return jsonify({'errors': form.errors}), 400
@@ -57,12 +56,16 @@ def update_shopname(id):
     if form.validate_on_submit():
         if user['id'] == shop.user_id:
             data = request.json
+            existing_shop = Shop.query.filter(Shop.shopname == data['shopname'], Shop.id != id).first()
+            if existing_shop:
+                return jsonify({'errors': {'shopname': ['Shop name already exists. Please choose a different name.']}}), 400
+
             shop.shopname = data['shopname']
             db.session.commit()
             return shop.to_dict()
         else:
-            return {'errors': {'message': 'Unauthorized'}}, 401
-    return form.errors, 401
+            return form.errors, 401
+    return {'errors': form.errors}, 401
 
 #delete a shop
 @shop_routes.route('/<int:id>',methods=['DELETE'])
@@ -80,8 +83,16 @@ def delete_shop(id):
     return {'errors': {'message': 'Unauthorized'}}, 401
 
 #get products by shopId
-@shop_routes.route('/<int:shop_id>/product',methods=['GET'])
+@shop_routes.route('/<int:shop_id>/products',methods=['GET'])
 @login_required
 def get_product_by_shopId(shop_id):
     products = Product.query.filter_by(shop_id=shop_id).all()
     return {'products': [product.to_dict() for product in products]}
+
+
+
+@shop_routes.route('/<int:shop_id>/products')
+def get_products_by_shop(shop_id):
+    products = Product.query.filter_by(shop_id=shop_id).all()
+    products_data = [product.to_dict() for product in products]
+    return jsonify(products_data)

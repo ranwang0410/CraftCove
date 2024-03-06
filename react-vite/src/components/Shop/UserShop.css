@@ -1,0 +1,68 @@
+.shopname{
+    color:darkgrey;
+    font-size: 25px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.shopname:hover{
+    transform: scale(1.05);
+}
+.shop{
+    display:flex;
+    justify-content: space-between;
+}
+
+
+.headers{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    cursor: pointer;
+
+}
+.headers button{
+    font-size: 20px;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.headers button:hover{
+    transform: scale(1.05);
+}
+.shop-page{
+    padding:0px 150px
+}
+
+.shopurl{
+    color:grey;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding:10px
+}
+
+.shopurl:hover {
+    transform: scale(1.05);
+  }
+.shop-left{
+    display: flex;
+}
+
+.shop-btn{
+    padding:0px 20px;
+    display: flex;
+
+}
+.shop-btn button{
+    margin-right: 10px;
+    margin-top:5px ;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    padding:3px
+
+}
+.shop-btn button:hover {
+    transform: scale(1.05);
+  }

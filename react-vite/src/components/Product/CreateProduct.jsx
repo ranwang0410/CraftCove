@@ -3,8 +3,10 @@ import { useDispatch } from 'react-redux';
 import { createProduct,getProductDetail } from "../../redux/product";
 
 
+
 export default function CreateProduct() {
     const dispatch = useDispatch();
+
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [image1, setImage1] = useState('')
@@ -14,6 +16,7 @@ export default function CreateProduct() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         dispatch(createProduct({ product_name: name, price: price, image1: image1, categorie: categorie, desc: desc }))
             .then((newProductId) => {
                 dispatch(getProductDetail(newProductId));

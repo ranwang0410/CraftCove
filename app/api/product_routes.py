@@ -17,7 +17,7 @@ def get_all_product():
 @product_routes.route('/newproduct',methods=['POST'])
 @login_required
 def create_product():
-
+    print("Create product endpoint hit")
     form = ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
@@ -32,6 +32,13 @@ def create_product():
             desc=form.desc.data,
             image1=form.image1.data,
             image2=form.image2.data if form.image2.data else None,
+            image3=form.image3.data if form.image3.data else None,
+            image4=form.image4.data if form.image4.data else None,
+            image5=form.image5.data if form.image5.data else None,
+            image6=form.image6.data if form.image6.data else None,
+            image7=form.image7.data if form.image7.data else None,
+            image8=form.image8.data if form.image8.data else None,
+            image9=form.image9.data if form.image9.data else None,
             categorie=form.categorie.data,
         )
         db.session.add(product)

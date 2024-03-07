@@ -21,7 +21,7 @@ export default function GetAllProduct() {
         navigate(`/product/${productId}`);
     };
 
-    if (!products) {
+    if (!Array.isArray(products) || products.length === 0) {
         return <div>No such product.</div>;
     }
 

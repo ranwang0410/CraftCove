@@ -51,7 +51,7 @@ function LoginFormModal() {
 
         <div className="loginmodal-body">
 
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit} className="login-form" noValidate>
             <div className="form-group">
               <div>Email</div>
 
@@ -62,7 +62,7 @@ function LoginFormModal() {
                 required
               />
 
-              {errors.email && <p>{errors.email}</p>}
+              {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
             </div>
 
             <div className="form-group">
@@ -75,7 +75,7 @@ function LoginFormModal() {
                 required
               />
 
-              {errors.password && <p>{errors.password}</p>}
+              {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
             </div>
 
             <button type="submit" className="btn-submit">Sign In</button>

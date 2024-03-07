@@ -21,7 +21,7 @@ export default function UpdateShop() {
             })
             .catch((error) => {
                 console.error('Error updating shop:', error);
-                setError('The shop name is existed')
+                setError('This shop name already exists.')
             });
     };
     return (

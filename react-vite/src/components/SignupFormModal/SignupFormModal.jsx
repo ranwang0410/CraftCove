@@ -46,7 +46,7 @@ function SignupFormModal() {
           {errors.server && <p>{errors.server}</p>}
         </div>
         <div className="loginmodal-body">
-          <form onSubmit={handleSubmit} className="login-form">
+          <form onSubmit={handleSubmit} className="login-form" noValidate>
           <div className="form-group">
           <div>Email</div>
 
@@ -57,7 +57,7 @@ function SignupFormModal() {
                 required
               />
 
-            {errors.email && <p>{errors.email}</p>}
+            {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
             </div>
 
             <div className="form-group">
@@ -70,7 +70,7 @@ function SignupFormModal() {
                 required
               />
 
-            {errors.username && <p>{errors.username}</p>}
+            {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
             </div>
             <div className="form-group">
               <div>Password</div>
@@ -82,7 +82,7 @@ function SignupFormModal() {
                 required
               />
 
-            {errors.password && <p>{errors.password}</p>}
+            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
             </div>
             {/* <label>
           Confirm Password

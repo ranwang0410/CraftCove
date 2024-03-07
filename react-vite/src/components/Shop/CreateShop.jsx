@@ -11,7 +11,6 @@ export default function CreateShop(){
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try {
-
             await dispatch(createShop({ shopname: shopName }));
             await dispatch(fetchShopsByUserId());
 
@@ -19,7 +18,7 @@ export default function CreateShop(){
         } catch (error) {
             console.error('Failed to create a shop', error);
             setError(error.message);
-            setError('The shop name is existed')
+            setError('This shop name already exists.')
         }
         setShopName('')
     }
@@ -27,7 +26,7 @@ export default function CreateShop(){
     return (
         <div>
             <h2>Create your first Shop</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
                 <label htmlFor="shopName">Shop Name:</label>
                 <input
                     id="shopName"

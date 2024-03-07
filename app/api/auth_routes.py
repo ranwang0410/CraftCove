@@ -31,7 +31,7 @@ def login():
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
-    return form.errors, 401
+    return {'errors':form.errors}, 401
 
 
 @auth_routes.route('/logout')

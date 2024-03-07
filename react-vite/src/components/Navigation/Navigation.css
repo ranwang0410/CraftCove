@@ -31,7 +31,7 @@ li {
   z-index: 1050;
 }
 
-.search-form{
+/* .search-form{
   flex: 0 1 60%;
   display: flex;
   justify-content: center;
@@ -42,7 +42,7 @@ li {
   margin-right: 8px;
   border:2px solid black;
 
-}
+} */
 .landing-right{
   display: flex;
 }

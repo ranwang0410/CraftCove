@@ -4,13 +4,13 @@ import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import './ProfileButton.css'
-import {NavLink} from 'react-router-dom'
+import {NavLink, useNavigate} from 'react-router-dom'
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((state) => state.session.user);
   const ulRef = useRef();
-
+  const navigate = useNavigate()
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ulRef.current && !ulRef.current.contains(event.target)) {
@@ -24,10 +24,11 @@ function ProfileButton() {
   const closeMenu = () => {
       setShowMenu(false);
   };
-  const logout = (e) => {
+  const logout =async(e) => {
     e.preventDefault();
     dispatch(thunkLogout());
     setShowMenu(false);
+    navigate('/')
   };
 
   return (
@@ -45,7 +46,8 @@ function ProfileButton() {
                   <li>{user.username}</li>
                   <li>{user.email}</li>
                   <li>
-                    <button onClick={(e) => logout(e)}><NavLink to ='/'>Sign Out</NavLink></button>
+                  <button onClick={logout}>Sign Out</button>
+                    {/* <button onClick={(e) => logout(e)}><NavLink to ='/'>Sign Out</NavLink></button> */}
                   </li>
                 </ul>
               </div>

@@ -75,6 +75,7 @@ export const updateProductAction = (id, { product_name, price, desc, image1, cat
   } else {
     const errors = await response.json();
     console.error('Failed to update product:', errors);
+    throw new Error(errors.errors);
   }}catch(error){
     console.error('Error updating product',error)
     throw error

@@ -1,19 +1,25 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, FloatField, IntegerField, TextAreaField, SelectField
-from wtforms.validators import DataRequired, Length, NumberRange
+from wtforms import StringField, FloatField, IntegerField, TextAreaField, SelectField,URLField
+from wtforms.validators import DataRequired, Length, NumberRange,ValidationError
+from app.models import Product
+
+def product_exists(form, field):
+
+    if Product.query.filter(Product.product_name==field.data).first():
+        raise ValidationError('This product name already exists.')
 
 class ProductForm(FlaskForm):
     shop_id = IntegerField('Shop ID')
-    product_name = StringField('Product Name', validators=[DataRequired(), Length(max=225)])
+    product_name = StringField('Product Name', validators=[DataRequired(),product_exists, Length(max=225)])
     price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0)])
-    desc = TextAreaField('Description', validators=[Length(max=512)])
-    image1 = StringField('Image 1', validators=[DataRequired()])
-    image2 =StringField('Image 2')
-    image3 =StringField('Image 3')
-    image4 =StringField('Image 4')
-    image5 =StringField('Image 5')
-    image6 =StringField('Image 6')
-    image7 =StringField('Image 7')
-    image8 =StringField('Image 8')
-    image9 =StringField('Image 9')
-    categorie = StringField('Category',validators=[DataRequired()])
+    desc = StringField('description', validators=[Length(max=512, message="Length of description must be less than 512 characters")])
+    image1 = URLField('image1', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    image2 = URLField('image2', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    image3 = URLField('image3', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    image4 = URLField('image4', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    image5 = URLField('image5', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    image6 = URLField('image6', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    image7 = URLField('image7', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    image8 = URLField('image8', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    image9 = URLField('image9', validators=[Length(max=256, message="Length of URL must be less than 256 characters")])
+    categorie = StringField('Categorie')

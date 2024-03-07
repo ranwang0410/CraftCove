@@ -4,7 +4,7 @@ import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import './ProfileButton.css'
-import {NavLink, useNavigate} from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);

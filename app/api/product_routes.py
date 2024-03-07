@@ -46,7 +46,7 @@ def create_product():
         new_product = product.to_dict()
         return {'Product':new_product}
     else:
-        return form.errors,401
+        return jsonify({'errors': form.errors}),401
 
 #update a product
 @product_routes.route('/update/<int:id>',methods=['PUT'])
@@ -68,7 +68,7 @@ def update_productname(id):
 
             db.session.commit()
             return product.to_dict()
-        return form.errors, 401
+        return jsonify({'errors': form.errors}),401
     return redirect('api/auth/unauthorized')
 
 

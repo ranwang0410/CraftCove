@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 
 export default function UpdateProduct() {
-    const {  productId } = useParams();
+    const { productId } = useParams();
     const productDetail = useSelector(state => state.product.productDetail);
 
     const [product_name, setProductName] = useState('');
@@ -18,7 +18,6 @@ export default function UpdateProduct() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     useEffect(() => {
-
         if (productId) {
             dispatch(getProductDetail(productId));
         }
@@ -37,34 +36,32 @@ export default function UpdateProduct() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        setErrors({})
         let newErrors = {};
         if (!product_name) newErrors.product_name = 'Product name cannot be empty';
         if (!price) newErrors.price = 'Price cannot be empty';
-        if (!desc) newErrors.desc = 'desc cannot be empty';
+        if (!desc) newErrors.desc = 'description cannot be empty';
         if (!categorie) newErrors.categorie = 'categorie cannot be empty'
         if (!image1) newErrors.image1 = 'Image1 cannot be empty'
         if (isNaN(price) || parseFloat(price) <= 0) newErrors.price = "Price should be a positive number.";
-
-        setErrors(newErrors);
-
-        if (Object.keys(newErrors).length > 0) return;
-
+        // if (Object.keys(newErrors).length > 0) return;
         try {
-            console.log({ product_name: product_name, price, desc: desc, image1, categorie: categorie });
-
-            await dispatch(updateProductAction(productId, { product_name: product_name, price: price, desc: desc, image1: image1, categorie: categorie }))
-            navigate(`/shop/${productDetail.shop_id}/products`)
-        } catch (error) {
-            console.error('Error updating product:', error);
-
-
+            if (Object.keys(newErrors).length === 0) {
+                await dispatch(updateProductAction(productId, { product_name: product_name, price: price, desc: desc, image1: image1, categorie: categorie }))
+                navigate(`/shop/${productDetail.shop_id}/products`)
+            }
         }
+        catch (error) {
+            console.error('Error updating product:', error);
+            // setErrors({ general: 'The product name already exist.' });
+            newErrors.general = 'The product name already exist.'
+        }
+        setErrors(newErrors);
     };
     return (
         <div>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
                 <label htmlFor="productName">New Product Name:</label>
                 <input
                     id="productName"
@@ -73,6 +70,7 @@ export default function UpdateProduct() {
                     onChange={(e) => setProductName(e.target.value)}
                     required
                 />
+                {errors.general && <div style={{ color: 'red' }}>{errors.general}</div>}
                 {errors.product_name && <div style={{ color: 'red' }}>{errors.product_name}</div>}
                 <label htmlFor="price">Price</label>
                 <input

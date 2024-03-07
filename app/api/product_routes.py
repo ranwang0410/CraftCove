@@ -17,16 +17,18 @@ def get_all_product():
 @product_routes.route('/newproduct',methods=['POST'])
 @login_required
 def create_product():
-    print("Create product endpoint hit")
+    data = request.json
+    shop_id = data['shop_id']
     form = ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        shop = Shop.query.filter_by(id = form.shop_id.data,user_id=current_user.id).first()
+        print(form.data,'shop_id')
+        shop = Shop.query.filter_by(id = form.data['shop_id'],user_id=current_user.id).first()
         if not shop:
             return {"errors": {"message": "Product couldn't be found"}}, 404
 
         product = Product(
-            shop_id = form.shop_id.data,
+            shop_id = shop_id,
             product_name=form.product_name.data,
             price=form.price.data,
             desc=form.desc.data,

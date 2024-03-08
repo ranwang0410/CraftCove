@@ -97,7 +97,7 @@ def create_product():
 
 #update a product
 @product_routes.route('/update/<int:id>',methods=['PUT'])
-@login_required
+# @login_required
 def update_productname(id):
     form =  ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']

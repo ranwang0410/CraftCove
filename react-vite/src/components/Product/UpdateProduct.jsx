@@ -56,6 +56,7 @@ export default function UpdateProduct() {
         formData.append('price', price);
         formData.append('desc', desc);
         if (image1) formData.append('image1', image1);
+        console.log('formData--->',formData.get('image1'))
         formData.append('categorie', categorie);
 
         dispatch(updateProductAction(productId, formData))
@@ -141,7 +142,7 @@ export default function UpdateProduct() {
                     // id="image"
                     type="file"
                     accept="image/*"
-                    onChange={(e) => setImage1(e.target.files[0])}
+                    onChange={(e) => {console.log('File input changed:', e.target.files[0]),setImage1(e.target.files[0])}}
                 />
                 {/* <label htmlFor="image">Image URL</label>
                 <input

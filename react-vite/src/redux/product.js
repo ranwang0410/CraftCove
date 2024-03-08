@@ -80,6 +80,7 @@ export const updateProductAction = (id, { product_name, price, desc, image1, cat
     // body: JSON.stringify(productData),
     body:productData
   });
+  console.log(response,'this is response')
   if (response.ok) {
     const updatedProduct = await response.json();
     dispatch(updateProduct(updatedProduct));

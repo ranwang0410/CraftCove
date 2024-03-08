@@ -8,7 +8,7 @@ export default function CreateProduct() {
     const { shopId } = useParams()
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
-    const [image1, setImage1] = useState('')
+    const [image1, setImage1] = useState(null)//
     const [categorie, setCategorie] = useState('')
     const [desc, setDesc] = useState('')
     const [errors, setErrors] = useState({})
@@ -16,12 +16,13 @@ export default function CreateProduct() {
     const navigate = useNavigate()
 
     const validateForm = () => {
+        // console.log('image1==>',image1);
         const newErrors = {};
         if (!name) newErrors.product_name = 'Product name cannot be empty';
         if (!price) newErrors.price = 'Price cannot be empty';
         if (!desc) newErrors.desc = 'Description cannot be empty';
         if (!categorie) newErrors.categorie = 'Categorie cannot be empty';
-        if (!image1) newErrors.image1 = 'Image1 cannot be empty';
+        if (image1 === null) newErrors.image1 = 'Image1 cannot be empty';
         if (isNaN(price) || parseFloat(price) <= 0) newErrors.price = "Price should be a positive number.";
         return newErrors;
     };
@@ -34,16 +35,25 @@ export default function CreateProduct() {
             return;
         }
 
-        dispatch(createProduct({ shop_id: shopId, product_name: name, price: price, image1: image1, categorie: categorie, desc: desc }))
+        const formData = new FormData()
+        formData.append('shop_id', shopId)
+        formData.append('product_name', name);
+        formData.append('price', price);
+        if (image1) formData.append('image1', image1);
+        formData.append('categorie', categorie);
+        formData.append('desc', desc);
+        console.log('formData--->',formData.get('image1'))
+        dispatch(createProduct((formData)))
             .then(() => {
                 navigate(`/shop/${shopId}/products`)
             }).catch((error) => {
                 console.error('Failed to create a product', error)
-                setErrors({ product_name: "The product name already exist." });
+                // setErrors({ product_name: "The product name already exist." });
+                setErrors(prevErrors => ({ ...prevErrors, form: error.message }));
             })
         setName('')
         setPrice('')
-        setImage1('')
+        setImage1(null)
         setCategorie('')
         setDesc('')
 
@@ -51,7 +61,7 @@ export default function CreateProduct() {
     return (
         <div>
             <h2>Add Listing</h2>
-            <form onSubmit={handleSubmit} noValidate>
+            <form onSubmit={handleSubmit} noValidate encType="multipart/form-data">
                 <label htmlFor="name">Product Name:</label>
                 <input
                     id="name"
@@ -71,14 +81,27 @@ export default function CreateProduct() {
                     required
                 />
                 {errors.price && <div style={{ color: 'red' }}>{errors.price}</div>}
-                <label htmlFor="image1">Image1 Url:</label>
+                {/* <label htmlFor="image1">Image1 Url:</label>
                 <input
                     id="image1"
                     type="text"
                     value={image1}
                     onChange={(e) => setImage1(e.target.value)}
                     required
+                /> */}
+                <label htmlFor="image1">Image1 Url:</label>
+                <input
+                    // id="image1"
+                    type="file"
+                    accept="image/*"
+                    // onChange={(e) => setImage1(e.target.files[0])}
+                    onChange={(e) => {
+                        console.log('File input changed:', e.target.files[0]);
+                        setImage1(e.target.files[0]);
+                    }}
+                    required
                 />
+
                 {errors.image1 && <div style={{ color: 'red' }}>{errors.image1}</div>}
                 <label htmlFor="categorie">Categorie:</label>
                 <input

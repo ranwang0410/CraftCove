@@ -45,29 +45,40 @@ export const getProducts = () => async (dispatch) => {
   }
 }
 
-export const createProduct = (productData) => async (dispatch) => {
-  const response = await csrfFetch('/api/product/newproduct', {
+export const createProduct = (formData) => async (dispatch) => {
+  try{
+    const response = await fetch('/api/product/newproduct', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(productData),
+    // headers: {
+    //   'Content-Type': 'application/json',
+    // },
+    // body: JSON.stringify(formData),
+    body:formData
   });
   if (response.ok) {
     const newProduct = await response.json();
     dispatch(addProduct(newProduct.Product));
+  }else {
+    const errorData = await response.json();
+    console.error('Failed to create a product:', errorData);
+    throw new Error(errorData.message || "Failed to create product.");
   }
-};
+}catch(error){
+  console.error('Error creating product:', error);
+  throw error;
+}
+}
 
 export const updateProductAction = (id, { product_name, price, desc, image1, categorie }) => async (dispatch) => {
   try{
   const productData = { product_name: product_name, price, desc: desc, image1, categorie: categorie };
   const response = await fetch(`/api/product/update/${id}`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(productData),
+    // headers: {
+    //   'Content-Type': 'application/json',
+    // },
+    // body: JSON.stringify(productData),
+    body:productData
   });
   if (response.ok) {
     const updatedProduct = await response.json();

@@ -69,18 +69,18 @@ export const createProduct = (formData) => async (dispatch) => {
 }
 }
 
-export const updateProductAction = (id, { product_name, price, desc, image1, categorie }) => async (dispatch) => {
+export const updateProductAction = (id, formData) => async (dispatch) => {
   try{
-  const productData = { product_name: product_name, price, desc: desc, image1, categorie: categorie };
+  // const productData = { product_name: product_name, price, desc: desc, image1, categorie: categorie };
   const response = await fetch(`/api/product/update/${id}`, {
     method: 'PUT',
     // headers: {
     //   'Content-Type': 'application/json',
     // },
     // body: JSON.stringify(productData),
-    body:productData
+    body:formData
   });
-  console.log(response,'this is response')
+  // console.log(response,'this is response')
   if (response.ok) {
     const updatedProduct = await response.json();
     dispatch(updateProduct(updatedProduct));
@@ -135,7 +135,7 @@ export const getProductsByShopId = (shopId) => async (dispatch) => {
 const initialState = { products: [], productDetail: null }
 
 export default function productsReducer(state = initialState, action) {
-  console.log('Current state:', state);
+  // console.log('Current state:', state);
   switch (action.type) {
     case SET_PRODUCTS:
       return { ...state, products: action.products };

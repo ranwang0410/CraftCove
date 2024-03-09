@@ -40,7 +40,7 @@ export default function GetProductByShopId() {
             console.error("No product selected for deletion");
             return;
         }
-        console.log("Selected product for deletion:", selectedProduct);
+        // console.log("Selected product for deletion:", selectedProduct);
         setShowSettingsModal(false);
         setShowDeleteModal(true);
     };

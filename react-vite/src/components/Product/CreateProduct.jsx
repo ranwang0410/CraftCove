@@ -42,7 +42,7 @@ export default function CreateProduct() {
         if (image1) formData.append('image1', image1);
         formData.append('categorie', categorie);
         formData.append('desc', desc);
-        console.log('formData--->',formData.get('image1'))
+        // console.log('formData--->',formData.get('image1'))
         dispatch(createProduct((formData)))
             .then(() => {
                 navigate(`/shop/${shopId}/products`)
@@ -96,7 +96,7 @@ export default function CreateProduct() {
                     accept="image/*"
                     // onChange={(e) => setImage1(e.target.files[0])}
                     onChange={(e) => {
-                        console.log('File input changed:', e.target.files[0]);
+                        // console.log('File input changed:', e.target.files[0]);
                         setImage1(e.target.files[0]);
                     }}
                     required

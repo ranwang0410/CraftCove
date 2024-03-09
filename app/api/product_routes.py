@@ -97,17 +97,21 @@ def create_product():
 
 #update a product
 @product_routes.route('/update/<int:id>',methods=['PUT'])
-# @login_required
+@login_required
 def update_productname(id):
     form =  ProductForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-
+    # print('hi')
     product = Product.query.get(id)
-
-    if not product and product.shop.user_id == current_user.id:
-        return redirect('api/auth/unauthorized')
+    # print('hello',product.shop.user_id,current_user.id)
+    if not product or product.shop.user_id != current_user.id:
+        print('good')
+        return jsonify({'errors': 'Unauthorized'}), 401
     else:
+        # print('bad')
+        # print(form.data)
         if form.validate_on_submit():
+            # print('form')
             image_file = form.data['image1']
             if image_file:
                 unique_filename = get_unique_filename(image_file.filename)
@@ -122,6 +126,7 @@ def update_productname(id):
             product.categorie = form.data["categorie"]
             db.session.commit()
             return product.to_dict()
+        # print('else')
         return jsonify({'errors': form.errors}),401
 
 # @product_routes.route('/update/<int:id>',methods=['PUT'])

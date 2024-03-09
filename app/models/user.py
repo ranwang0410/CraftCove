@@ -4,7 +4,7 @@ from flask_login import UserMixin
 from datetime import datetime
 
 class User(db.Model, UserMixin):
-    print('this is user model')
+    # print('this is user model')
     __tablename__ = 'users'
 
     if environment == "production":

@@ -4,14 +4,14 @@ from .user import User
 from .shop import Shop
 
 class Product(db.Model):
-    print('this is product model')
+    # print('this is product model')
     __tablename__ = 'products'
 
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    shop_id = db.Column(db.Integer, db.ForeignKey(Shop.id))
+    shop_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod(Shop.id))
     product_name = db.Column(db.String(225), nullable=False, unique=True)
     price = db.Column(db.Float, nullable=False)
     desc = db.Column(db.String(512))

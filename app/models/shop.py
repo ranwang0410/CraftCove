@@ -11,7 +11,7 @@ class Shop(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id'), nullable=False))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'),nullable=False)
     shopname = db.Column(db.String(40), nullable=False, unique=True)
 
     created_at = db.Column(db.DateTime, default=datetime.now)

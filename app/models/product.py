@@ -11,7 +11,7 @@ class Product(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    shop_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('shops.id'))
+    shop_id = db.Column(db.Integer, db.ForeignKey('shops.id'))
     product_name = db.Column(db.String(225), nullable=False, unique=True)
     price = db.Column(db.Float, nullable=False)
     desc = db.Column(db.String(512))

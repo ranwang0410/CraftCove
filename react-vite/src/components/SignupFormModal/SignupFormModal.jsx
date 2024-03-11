@@ -20,6 +20,7 @@ function SignupFormModal() {
 
     if (password !== confirmPassword) {
       newErrors.confirmPassword = "Confirm Password field must be the same as the Password field";
+
     }
 
     const serverResponse = await dispatch(
@@ -38,11 +39,6 @@ function SignupFormModal() {
     } else {
       closeModal();
     }
-    // if (serverResponse) {
-    //   setErrors(serverResponse);
-    // } else {
-    //   closeModal();
-    // }
   };
 
   return (
@@ -101,7 +97,7 @@ function SignupFormModal() {
 
             </div>
 
-            <button type="submit" className="btn-submit">Sign Up</button>
+            <button type="submit" id="btn-submit">Sign Up</button>
           </form>
         </div>
       </div>

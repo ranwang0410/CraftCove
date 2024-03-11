@@ -147,7 +147,8 @@ export default function productsReducer(state = initialState, action) {
       return {
         ...state,
         products: state.products.products.map(product =>
-          product.id === action.payload.id ? action.payload.updatedProduct : product
+          // product.id === action.payload.id ? action.payload.updatedProduct : product
+          product.id === action.payload.id ? { ...product, ...action.payload.updatedProduct } : product
         ),
         productDetail: state.productDetail && state.productDetail.id === action.payload.id ? action.payload.updatedProduct : state.productDetail,
       };

@@ -20,7 +20,7 @@ def username_exists(form, field):
         raise ValidationError('Username is already in use.')
 
 def custom_email_validator(form, field):
-    if "@" not in field.data:
+    if "@" not in field.data or '.' not in field.data:
         raise ValidationError("Not a valid email.")
 
 class SignUpForm(FlaskForm):

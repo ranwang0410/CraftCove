@@ -33,8 +33,8 @@ export default function GetAllProduct() {
                 {products?.map(product => (
                     <div key={product.id} className="product-item" onClick={() => handleProductClick(product.id)}>
                         <img src={product.image1 ? product.image1 : null} alt={product.product_name} />
-                        <h3>{product.product_name}</h3> * <h4> {product.shop ? product.shop.shopname : 'No shop info'}</h4>
-                        <p style={{ fontWeight: 'bold' }}>${product.price}</p>
+                        <h3>{product.product_name}</h3><h4> {product.shop ? product.shop.shopname : 'No shop info'}</h4>
+                        <p><i className="fa-solid fa-dollar-sign"/>{product.price}</p>
 
                     </div>
                 ))}

@@ -30,6 +30,7 @@ export default function ProductDetail() {
         <div className="product-detail-container">
 
             <div className="images-sidebar">
+                {productDetails.image1 && <img src={productDetails.image1} onClick={() => handleImageClick(productDetails.image1)} alt={productDetails.product_name} />}
                 {productDetails.image2 && <img src={productDetails.image2} onClick={() => handleImageClick(productDetails.image2)} alt={productDetails.product_name} />}
                 {productDetails.image3 && <img src={productDetails.image3} onClick={() => handleImageClick(productDetails.image3)} alt={productDetails.product_name} />}
                 {productDetails.image4 && <img src={productDetails.image4} onClick={() => handleImageClick(productDetails.image4)} alt={productDetails.product_name} />}
@@ -40,13 +41,13 @@ export default function ProductDetail() {
                 {productDetails.image9 && <img src={productDetails.image9} onClick={() => handleImageClick(productDetails.image9)} alt={productDetails.product_name} />}
             </div>
             <div className="main-image-container">
-                <span><i className='fas fa-angle-left'></i></span>
+                {/* <span><i className='fas fa-angle-left'></i></span> */}
                 <img src={selectedImage ? selectedImage : null} alt={productDetails.product_name} />
-                <span><i className='fas fa-angle-right'></i></span>
+                {/* <span><i className='fas fa-angle-right'></i></span> */}
             </div>
 
             <div className="product-info">
-                <h1>${productDetails.price}</h1>
+                <h1><i className="fa-solid fa-dollar-sign"/>{productDetails.price}</h1>
                 <h2>{productDetails.product_name}</h2>
                 <h2>{productDetails.shop ? productDetails.shop.shopname : 'No shop info'}</h2>
                 <button className="add-to-cart-btn"  onClick={() => alert('Feature coming soon')}>Add to cart</button>

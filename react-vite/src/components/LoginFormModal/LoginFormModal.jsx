@@ -78,7 +78,7 @@ function LoginFormModal() {
               {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
             </div>
 
-            <button type="submit" className="btn-submit">Sign In</button>
+            <button type="submit" id="btn-submit">Sign In</button>
             <button className="demo-button" onClick={() => { dispatch(thunkLogin({ email: 'demo@aa.io', password: 'password' })); closeModal() }}>Demo User</button>
           </form>
         </div>

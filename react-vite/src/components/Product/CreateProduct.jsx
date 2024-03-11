@@ -12,6 +12,7 @@ export default function CreateProduct() {
     const [categorie, setCategorie] = useState('')
     const [desc, setDesc] = useState('')
     const [errors, setErrors] = useState({})
+    const [imagePreview, setImagePreview] = useState('');
 
     const navigate = useNavigate()
 
@@ -42,7 +43,7 @@ export default function CreateProduct() {
         if (image1) formData.append('image1', image1);
         formData.append('categorie', categorie);
         formData.append('desc', desc);
-        console.log('formData--->',formData.get('image1'))
+        console.log('formData--->', formData.get('image1'))
         dispatch(createProduct((formData)))
             .then(() => {
                 navigate(`/shop/${shopId}/products`)
@@ -62,7 +63,8 @@ export default function CreateProduct() {
     return (
         <div>
 
-            <form onSubmit={handleSubmit} noValidate encType="multipart/form-data">
+            <form onSubmit={handleSubmit} noValidate encType="multipart/form-data" className="update-shop-form">
+                <div className="list">Add Listing</div>
                 <label htmlFor="name">Product Name:</label>
                 <input
                     id="name"
@@ -82,23 +84,17 @@ export default function CreateProduct() {
                     required
                 />
                 {errors.price && <div style={{ color: 'red' }}>{errors.price}</div>}
-                {/* <label htmlFor="image1">Image1 Url:</label>
-                <input
-                    id="image1"
-                    type="text"
-                    value={image1}
-                    onChange={(e) => setImage1(e.target.value)}
-                    required
-                /> */}
+
                 <label htmlFor="image1">Image1 Url:</label>
+                {imagePreview && <img src={imagePreview} alt="Product" style={{ maxWidth: '200px', marginBottom: '10px' }} />}
                 <input
                     // id="image1"
                     type="file"
                     accept="image/*"
-                    // onChange={(e) => setImage1(e.target.files[0])}
                     onChange={(e) => {
                         // console.log('File input changed:', e.target.files[0]);
                         setImage1(e.target.files[0]);
+                        setImagePreview(URL.createObjectURL(e.target.files[0]));
                     }}
                     required
                 />
@@ -122,7 +118,11 @@ export default function CreateProduct() {
                     required
                 />
                 {errors.desc && <div style={{ color: 'red' }}>{errors.desc}</div>}
-                <button type="submit" >Create Product</button>
+                {/* <button type="submit" >Create Product</button> */}
+                <div className="update-product-flex">
+                    <button onClick={() => navigate(`/shop/${shopId}/products`)} className="cancel">Cancel</button>
+                    <button type="submit">Create Product</button>
+                </div>
             </form>
         </div>
     )

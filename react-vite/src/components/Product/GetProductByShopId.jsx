@@ -10,7 +10,7 @@ export default function GetProductByShopId() {
     const { shopId } = useParams();
     const dispatch = useDispatch();
     const products = useSelector(state => state.product.products.products)
-    console.log(products,'this is products')
+    // console.log(products,'this is products')
     const [showSettingsModal, setShowSettingsModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -57,11 +57,10 @@ export default function GetProductByShopId() {
         dispatch(getProductsByShopId(shopId));
     };
 
-
     return (
         <div className='landing-page'>
             <div className="up-down">
-                <div className="create-product"><button><NavLink to={`/shop/${shopId}/products/create-product`}>Create product</NavLink></button></div>
+            <div className="create-product"><button><NavLink to={`/shop/${shopId}/products/create-product`}>Create product</NavLink></button></div>
                 <div className="product-list-shopid">
                     {products ? (
 

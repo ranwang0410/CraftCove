@@ -26,10 +26,13 @@ form button[type="submit"] {
     color: white;
     cursor: pointer;
     transition: background-color 0.2s;
+    border-radius: 3px;
+
 }
 
 form button[type="submit"]:hover {
     background-color: darkgrey;
+
 }
 
 .update-product-flex{
@@ -41,4 +44,13 @@ form button[type="submit"]:hover {
     cursor: pointer;
 
 }
-
+.update-shop-form textarea{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+.list{
+    font-size: 25px;
+    font-weight: bold;
+    color:rgb(65, 64, 64)
+}

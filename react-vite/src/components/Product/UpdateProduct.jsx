@@ -7,13 +7,14 @@ import './UpdateProduct.css'
 export default function UpdateProduct() {
     const { productId } = useParams();
     const productDetail = useSelector(state => state.product.productDetail);
-    const {shopId} = useParams()
+    const { shopId } = useParams()
     const [product_name, setProductName] = useState('');
     const [price, setPrice] = useState('');
     const [desc, setDescription] = useState('');
     const [image1, setImage1] = useState(null);
     const [categorie, setCategorie] = useState('');
     const [errors, setErrors] = useState({})
+    const [imagePreview, setImagePreview] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -23,15 +24,18 @@ export default function UpdateProduct() {
         }
     }, [dispatch, productId]);
 
-    useEffect(()=>{
-        if(productDetail){
+    useEffect(() => {
+        if (productDetail) {
             setProductName(productDetail.product_name || '');
             setPrice(productDetail.price || '');
             setDescription(productDetail.desc || '');
             // setImage1(productDetail.image1 || '');
+            // console.log('this is image1==>',productDetail.image1)
             setCategorie(productDetail.categorie || '')
+            setImagePreview(productDetail.image1 || '')
+
         }
-    },[productDetail])
+    }, [productDetail])
 
     const validateForm = () => {
         const newErrors = {};
@@ -66,12 +70,12 @@ export default function UpdateProduct() {
                 console.error('Failed to update the product', error);
                 setErrors({ general: 'The product name already exist.' });
             });
-        }
+    }
     return (
         <div>
 
-            <form onSubmit={handleSubmit} noValidate encType="multipart/form-data">
-                <h2>Listing Details</h2>
+            <form onSubmit={handleSubmit} noValidate encType="multipart/form-data" className="update-shop-form">
+                <div className="list">Listing Details</div>
                 <label htmlFor="productName">Title *</label>
                 <input
                     id="productName"
@@ -99,12 +103,19 @@ export default function UpdateProduct() {
                     required
                 />
                 {errors.desc && <div style={{ color: 'red' }}>{errors.desc}</div>}
-                <label htmlFor="image">Image URL</label>
+
+
+                <label htmlFor="image">Image URL *</label>
+                {imagePreview && <img src={imagePreview} alt="Product" style={{ maxWidth: '200px', marginBottom: '10px' }} />}
                 <input
                     // id="image"
                     type="file"
                     accept="image/*"
-                    onChange={(e) => setImage1(e.target.files[0])}
+                    onChange={(e) => {
+                        setImage1(e.target.files[0]);
+                        setImagePreview(URL.createObjectURL(e.target.files[0]));
+                        }
+                    }
                 />
 
                 {errors.image1 && <div style={{ color: 'red' }}>{errors.image1}</div>}
@@ -118,8 +129,8 @@ export default function UpdateProduct() {
                 />
                 {errors.categorie && <div style={{ color: 'red' }}>{errors.categorie}</div>}
                 <div className="update-product-flex">
-                <button onClick={()=>navigate(`/shop/${shopId}/products`)} className="cancel">Cancel</button>
-                <button type="submit">Save</button>
+                    <button onClick={() => navigate(`/shop/${shopId}/products`)} className="cancel">Cancel</button>
+                    <button type="submit">Save</button>
                 </div>
             </form>
         </div>

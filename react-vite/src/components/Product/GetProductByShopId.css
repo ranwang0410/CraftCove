@@ -1,5 +1,4 @@
-
- .product-list-shopid {
+.product-list-shopid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 50px;
@@ -26,10 +25,6 @@
     display: block;
 }
 
-.product-spec {
-    padding: 15px;
-    flex: 1;
-}
 h3, h4, p {
     text-align: left;
     margin: 5px 0;
@@ -52,7 +47,39 @@ h3, h4, p {
     background-color: lightgray;
 }
 
-@media (min-width: 800px) {
+.create-product button{
+    margin:0px 30px;
+    width:25%;
+    transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    padding:3px 20px;
+
+}
+
+.create-product button:hover {
+    transform: scale(1.05);
+  }
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+.create-product a{
+    text-decoration: none;
+    color:inherit
+}
+.product-spec {
+    padding: 15px;
+    flex: 1;
+}
+/* @media (min-width: 800px) {
     .product-list-shopid {
         grid-template-columns: repeat(4, 1fr);
     }
@@ -65,30 +92,4 @@ h3, h4, p {
     .product-list-shopid {
         grid-template-columns: repeat(2, 1fr);
     }
-}
-
-.create-product button{
-    margin:0px 30px;
-    width:25%;
-    transition: transform 0.2s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    cursor: pointer;
-    padding:3px 20px;
-
-}
-.create-product button:hover {
-    transform: scale(1.05);
-  }
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 999;
-}
-.create-product a{
-    text-decoration: none;
-    color:inherit
-}
+} */

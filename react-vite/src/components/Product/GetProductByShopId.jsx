@@ -46,7 +46,8 @@ export default function GetProductByShopId() {
     };
     const handleProductClick = (productId) => {
 
-        navigate(`/product/update/${productId}`);
+        // navigate(`/product/update/${productId}`);
+        navigate(`/product/${productId}`);
     };
 
     const handleCloseDeleteModal = () => {

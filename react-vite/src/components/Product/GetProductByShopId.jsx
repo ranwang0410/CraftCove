@@ -10,7 +10,7 @@ export default function GetProductByShopId() {
     const { shopId } = useParams();
     const dispatch = useDispatch();
     const products = useSelector(state => state.product.products.products)
-
+    console.log(products,'this is products')
     const [showSettingsModal, setShowSettingsModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -49,51 +49,59 @@ export default function GetProductByShopId() {
         navigate(`/product/update/${productId}`);
     };
 
-    const handleCloseDeleteModal = () =>{
+    const handleCloseDeleteModal = () => {
         setShowDeleteModal(false)
     }
 
     const refreshProducts = () => {
         dispatch(getProductsByShopId(shopId));
     };
+
+
     return (
         <div className='landing-page'>
+            <div className="up-down">
+                <div className="create-product"><button><NavLink to={`/shop/${shopId}/products/create-product`}>Create product</NavLink></button></div>
+                <div className="product-list-shopid">
+                    {products ? (
 
-            <div className="create-product"><button><NavLink to={`/shop/${shopId}/products/create-product`}>Create product</NavLink></button></div>
-            <div className="product-list-shopid">
-            {products ? (
-                <div>
-                    {products?.map((product) => (
-                        <div key={product.id} className="product-item-shopid">
-                            <div className="product-spec" onClick={() => handleProductClick(product.id)}>
-                                <img src={product.image1 ? product.image1 : undefined} alt={product.product_name} />
-                                <h3>{product.product_name}</h3>
-                                <p style={{ fontWeight: 'bold' }}>${product.price}</p>
-                            </div>
-                            <button onClick={() => openSettings(product)} className="setting-btn"><i className="fa fa-cog" aria-hidden="true"></i><i className="fa fa-caret-down" aria-hidden="true"></i></button>
-                        </div>
-                    ))}
+                            products?.map((product) => (
+                                <div key={product.id} className="product-item-shopid">
+                                    <div className="product-spec" onClick={() => handleProductClick(product.id)}>
+                                        <img src={product.image1 ? product.image1 : undefined} alt={product.product_name} />
+                                        <h3>{product.product_name}</h3>
+                                        <p style={{ fontWeight: 'bold' }}>${product.price}</p>
+                                    </div>
+                                    <button onClick={() => openSettings(product)} className="setting-btn"><i className="fa fa-cog" aria-hidden="true"></i><i className="fa fa-caret-down" aria-hidden="true"></i></button>
+                                </div>
+                            ))
+
+                    ) : (
+                        <p>No products found for this shop.</p>
+                    )}
+                    {showSettingsModal && (
+                        <SettingsModal
+                            isOpen={showSettingsModal}
+                            onClose={closeSettingsModal}
+                            onEdit={handleEdit}
+                            onDelete={handleDeleteOption}
+                        />
+                    )}
+
+                    {showDeleteModal && selectedProduct ? (
+                        <>
+                        <div className="overlay" onClick={handleCloseDeleteModal}></div>
+                        <DeleteModal
+                            productId={selectedProduct.id}
+                            onCancel={handleCloseDeleteModal}
+                            afterDelete={refreshProducts}
+                        />
+                        </>
+                    ) : null}
                 </div>
-            ) : (
-                <p>No products found for this shop.</p>
-            )}
-            {showSettingsModal && (
-                <SettingsModal
-                    isOpen={showSettingsModal}
-                    onClose={closeSettingsModal}
-                    onEdit={handleEdit}
-                    onDelete={handleDeleteOption}
-                />
-            )}
-
-            {showDeleteModal && selectedProduct ? (
-                <DeleteModal
-                    productId={selectedProduct.id}
-                    onCancel={handleCloseDeleteModal}
-                    afterDelete={refreshProducts}
-                />
-            ) : null}
             </div>
+
+
         </div>
     )
 }

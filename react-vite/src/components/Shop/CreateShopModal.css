@@ -1,0 +1,42 @@
+#shopName{
+    padding-left: 10px
+}
+#modalFooter {
+    display: flex;
+    padding-top: 16px;
+  }
+
+  #modalFooter > input[type=submit] {
+    float: right;
+    margin: 0;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  .btnText {
+    font-weight: 300;
+    font-size: 14px;
+    margin: auto;
+    color: var(--colBlurple);
+  }
+  .btnText:hover {
+    cursor: pointer;
+    text-decoration: underline
+  }
+  #modalFooter > * {
+    z-index: 5;
+  }
+  #modalFooter > .btnText {
+    margin: auto auto auto 16px;
+  }
+  #modalTitle {
+    font-size: 26px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--textWhite);
+    padding-bottom: 16px;
+  }
+
+.modal{
+    padding:20px 30px;
+    border:solid 1px
+}

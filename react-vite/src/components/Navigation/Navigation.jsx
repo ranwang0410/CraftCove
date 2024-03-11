@@ -14,7 +14,7 @@ function Navigation() {
 
   return (
     <ul className='navcontainer'>
-      <li><NavLink to="/"><img src='/home.png' alt="Home1" className="nav-home-icon" /></NavLink></li>
+      <NavLink to="/"><img src='/home.png' alt="Home1" className="nav-home-icon" /></NavLink>
 
       {/* <form className="search-form" onClick={() => alert('Feature coming soon')}>
           <input
@@ -25,22 +25,22 @@ function Navigation() {
           />
           <button type="submit" className="search-button">Search</button>
         </form> */}
-      <li className="landing-right">
+      <div className="landing-right">
         {
           sessionUser && (
-            <li onClick={handleStoreClick} title="Manage Shop">
-              <NavLink to="/store">
+            <div onClick={handleStoreClick} title="Manage Shop" className="nav-item">
+              <NavLink to="/store" className='manage-shop-button' style={{fontSize:'17px',color:'black'}}>
                 <i className="fas fa-store-alt" />
               </NavLink>
-            </li>
+            </div>
           )
         }
-        <li><ProfileButton /></li>
+        <div className="nav-item"><ProfileButton /></div>
 
-        <button className="shopping-cart-icon" onClick={() => alert('Feature coming soon')} title='shopping cart'>
+        <button className="shopping-cart-icon" onClick={() => alert('Feature coming soon')} title='shopping cart' style={{fontSize:'15px'}}>
           <i className="fas fa-shopping-cart"></i>
         </button>
-      </li>
+      </div>
 
     </ul>
   );

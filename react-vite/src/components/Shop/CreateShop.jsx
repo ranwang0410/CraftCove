@@ -25,7 +25,7 @@ export default function CreateShop(){
 
     return (
         <div>
-            <h2>Create your first Shop</h2>
+            <h2>Create Shop</h2>
             <form onSubmit={handleSubmit} noValidate>
                 <label htmlFor="shopName">Shop Name:</label>
                 <input

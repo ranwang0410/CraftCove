@@ -1,33 +1,49 @@
-import { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { modifyShop } from '../../redux/shop';
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchShopsByUserId, modifyShop } from '../../redux/shop';
+import { useModal } from "../../context/Modal";
+import './UpdateShop.css';
 
-export default function UpdateShop() {
+export default function UpdateShop({ shopId, onSuccess }) {
     const [shopName, setShopName] = useState('');
+    const [error, setError] = useState('');
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { shopId } = useParams();
-    const [error, setError] = useState('')
+    const { closeModal } = useModal();
+    const userShops = useSelector(state => state.shop.userShops);
 
+    useEffect(() => {
+        const shop = userShops.find(shop => shop.id === shopId);
+
+        if (shop) {
+            setShopName(shop.shopname);
+        }
+    }, [userShops, shopId]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!shopName.trim()) {
+            setError('Please enter a shop name');
+            return;
+        }
 
-
-        dispatch(modifyShop(shopId, { shopname: shopName }))
+        dispatch(modifyShop(shopId, { shopname: shopName.trim() }))
             .then(() => {
-                navigate('/store')
+                closeModal();
+                dispatch(fetchShopsByUserId());
+                if (onSuccess) {
+                    onSuccess();
+                }
             })
             .catch((error) => {
                 console.error('Error updating shop:', error);
-                setError('This shop name already exists.')
+                setError('This shop name already exists.');
             });
     };
+
     return (
-        <div>
-            <h2>Update Shop Name</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="modal">
+            <div id='modalTitle'>Update Shop</div>
+            <form onSubmit={handleSubmit} className="update-shop-form" noValidate>
                 <label htmlFor="shopName">New Shop Name:</label>
                 <input
                     id="shopName"
@@ -37,9 +53,12 @@ export default function UpdateShop() {
                     required
                 />
 
-                <button type="submit">Update Shop</button>
+                <div id="modalFooter">
+                    <div className='btnText' onClick={closeModal}>Cancel</div>
+                    <input type="submit" value='Update'/>
+                </div>
                 {error && <div style={{ color: 'red' }}>{error}</div>}
             </form>
         </div>
-    )
+    );
 }

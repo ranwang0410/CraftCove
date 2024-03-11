@@ -42,15 +42,16 @@ export default function CreateProduct() {
         if (image1) formData.append('image1', image1);
         formData.append('categorie', categorie);
         formData.append('desc', desc);
-        // console.log('formData--->',formData.get('image1'))
+        console.log('formData--->',formData.get('image1'))
         dispatch(createProduct((formData)))
             .then(() => {
                 navigate(`/shop/${shopId}/products`)
             }).catch((error) => {
                 console.error('Failed to create a product', error)
-                // setErrors({ product_name: "The product name already exist." });
-                setErrors(prevErrors => ({ ...prevErrors, form: error.message }));
+                setErrors({ product_name: "The product name already exist." });
+                // setErrors(prevErrors => ({ ...prevErrors, form: error.message }));
             })
+
         setName('')
         setPrice('')
         setImage1(null)
@@ -60,7 +61,7 @@ export default function CreateProduct() {
     }
     return (
         <div>
-            <h2>Add Listing</h2>
+
             <form onSubmit={handleSubmit} noValidate encType="multipart/form-data">
                 <label htmlFor="name">Product Name:</label>
                 <input

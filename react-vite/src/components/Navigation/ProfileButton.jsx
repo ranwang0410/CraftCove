@@ -5,6 +5,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import './ProfileButton.css'
 import { useNavigate} from 'react-router-dom'
+
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -36,18 +37,17 @@ function ProfileButton() {
       <div ref={ulRef}>
         {user ? (
           <>
-            <button onClick={() => setShowMenu(!showMenu)}>
-              <i className="fas fa-user-circle" />
+            <button onClick={() => setShowMenu(!showMenu)} className="profile-button">
+              <i className="fas fa-user-circle" style={{ marginRight: '2px',fontSize:'18px' }}/>
               <i className="fas fa-caret-down" />
             </button>
             {showMenu && (
               <div className="profile-dropdown">
                 <ul>
-                  <li>{user.username}</li>
-                  <li>{user.email}</li>
+                  <li className="profile-detail">{user.username}</li>
+                  <li className="profile-detail">{user.email}</li>
                   <li>
-                  <button onClick={logout}>Sign Out</button>
-                    {/* <button onClick={(e) => logout(e)}><NavLink to ='/'>Sign Out</NavLink></button> */}
+                  <button onClick={logout} className="logout-button">Sign Out   <i className="fa-solid fa-arrow-right-from-bracket"/></button>
                   </li>
                 </ul>
               </div>

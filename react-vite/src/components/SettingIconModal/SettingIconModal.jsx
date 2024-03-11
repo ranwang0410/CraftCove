@@ -1,6 +1,8 @@
+import './SettingIconModal.css'
 
-const SettingsModal = ({ isOpen,  onEdit,onDelete}) => {
-    if (!isOpen) return null;
+const SettingsModal = ({ isOpen,onEdit,onDelete}) => {
+
+  if (!isOpen) return null;
 
     return (
       <div className="modal-backdrop">

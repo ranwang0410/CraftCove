@@ -1,0 +1,13 @@
+
+.update-shop-form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.update-shop-form input[type="text"]{
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+

@@ -7,7 +7,7 @@
   list-style: none;
   margin:50px 100px;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 li {
@@ -45,4 +45,38 @@ li {
 } */
 .landing-right{
   display: flex;
+  align-items: center;
+}
+
+.nav-item{
+  margin-right:15px
+}
+
+.shopping-cart-icon{
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.shopping-cart-icon:hover {
+  background-color: lightblue;
+}
+
+.manage-shop-button{
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manage-shop-button:hover{
+  background-color: lightblue;
 }

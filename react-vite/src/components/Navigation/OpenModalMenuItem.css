@@ -1,0 +1,16 @@
+.menu-text{
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 40%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.menu-text:hover{
+    background-color: lightgrey;
+}
+

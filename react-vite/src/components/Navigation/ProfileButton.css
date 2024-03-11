@@ -1,0 +1,31 @@
+.profile-button{
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 40%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-button:hover{
+    background-color: lightblue;
+}
+
+.logout-button{
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  border:none
+}
+.logout-button:hover{
+  background-color: lightgrey;
+}
+.profile-detail{
+  background-color: white;
+  border: none;
+  cursor: pointer;
+
+}
+

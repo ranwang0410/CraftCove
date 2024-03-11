@@ -1,5 +1,5 @@
 import { useModal } from '../../context/Modal';
-
+import './OpenModalMenuItem.css'
 function OpenModalMenuItem({
   modalComponent, // component to render inside the modal
   itemText, // text of the button that opens the modal
@@ -15,7 +15,7 @@ function OpenModalMenuItem({
   };
 
   return (
-    <li onClick={onClick}>{itemText}</li>
+    <li onClick={onClick} className='menu-text'>{itemText}</li>
   );
 }
 

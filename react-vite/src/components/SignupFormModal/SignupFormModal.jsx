@@ -9,19 +9,18 @@ function SignupFormModal() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (password !== confirmPassword) {
-    //   return setErrors({
-    //     confirmPassword:
-    //       "Confirm Password field must be the same as the Password field",
-    //   });
-    // }
+    let newErrors = {};
+
+    if (password !== confirmPassword) {
+      newErrors.confirmPassword = "Confirm Password field must be the same as the Password field";
+    }
 
     const serverResponse = await dispatch(
       thunkSignup({
@@ -30,12 +29,20 @@ function SignupFormModal() {
         password,
       })
     );
-
     if (serverResponse) {
-      setErrors(serverResponse);
+      newErrors = { ...newErrors, ...serverResponse };
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
     } else {
       closeModal();
     }
+    // if (serverResponse) {
+    //   setErrors(serverResponse);
+    // } else {
+    //   closeModal();
+    // }
   };
 
   return (
@@ -47,8 +54,8 @@ function SignupFormModal() {
         </div>
         <div className="loginmodal-body">
           <form onSubmit={handleSubmit} className="login-form" noValidate>
-          <div className="form-group">
-          <div>Email</div>
+            <div className="form-group">
+              <div>Email</div>
 
               <input
                 type="text"
@@ -57,7 +64,7 @@ function SignupFormModal() {
                 required
               />
 
-            {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
+              {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
             </div>
 
             <div className="form-group">
@@ -70,30 +77,30 @@ function SignupFormModal() {
                 required
               />
 
-            {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
+              {errors.username && <div style={{ color: 'red' }}>{errors.username}</div>}
             </div>
             <div className="form-group">
               <div>Password</div>
-
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-
-            {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
+              {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
             </div>
-            {/* <label>
-          Confirm Password
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>} */}
+            <div className="form-group">
+              <div>Confirm Password</div>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+              {errors.confirmPassword && <div style={{ color: 'red' }}>{errors.confirmPassword}</div>}
+
+            </div>
+
             <button type="submit" className="btn-submit">Sign Up</button>
           </form>
         </div>

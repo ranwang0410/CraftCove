@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Shop,Product,db
-from app.forms import ProductForm,ShopForm
+from app.models import Shop,Product,db,Review
+from app.forms import ProductForm,ShopForm,ReviewForm
 from helper import upload_file_to_s3, get_unique_filename
 
 
@@ -67,7 +67,7 @@ def update_productname(id):
     form['csrf_token'].data = request.cookies['csrf_token']
     # print('hi')
     product = Product.query.get(id)
-    print('hello',product.id)
+    # print('hello',product.id)
     if not product or product.shop.user_id != current_user.id:
         return jsonify({'errors': 'Unauthorized'}), 401
     else:
@@ -119,4 +119,40 @@ def get_product(product_id):
     else:
         return jsonify({'error': 'Product not found'}), 404
 
+
+
+
+#post new review for specify productId
+@login_required
+@product_routes.route('/<int:product_id>/newreview',methods=['POST'])
+def create_review(product_id):
+    # prduct = Product.query.get(product_id)
+
+    form = ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    # product_id = form.data['product_id']
+    data = request.get_json()
+    print(data,'this is data ===>')
+    rating = data.get('rating')
+    comment = data.get('comment')
+
+    product = Product.query.get(product_id)
+    print('product===>',product)
+    if form.validate_on_submit():
+        # product = Product.query.filter_by(id = form.data['product_id']).first()
+        if not product:
+            return {"errors": {"message": "Product couldn't be found"}}, 404
+        user = current_user.to_dict()
+        review = Review(
+            user_id = user['id'],
+            product_id = product.id,
+            rating = form.data['rating'],
+            comment = form.data['comment']
+        )
+        db.session.add(review)
+        db.session.commit()
+        new_review=review.to_dict()
+        return {'Review':new_review}
+    else:
+        return jsonify({'errors': form.errors}), 400
 

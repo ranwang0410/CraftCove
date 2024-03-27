@@ -27,7 +27,7 @@ class User(db.Model, UserMixin):
     shops = db.relationship('Shop', back_populates='user',cascade='all, delete-orphan')
     # carts = db.relationship('Cart', back_populates='user',cascade='all, delete-orphan')
     # likes = db.relationship('Like', back_populates='user',cascade='all, delete-orphan')
-    # reviews = db.relationship('Review', back_populates='user',cascade='all, delete-orphan')
+    reviews = db.relationship('Review', back_populates='user',cascade='all, delete-orphan')
     # transactions = db.relationship('Transaction', back_populates='user',cascade='all, delete-orphan')
 
     @property

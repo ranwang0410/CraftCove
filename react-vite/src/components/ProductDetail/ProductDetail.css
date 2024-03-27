@@ -1,3 +1,4 @@
+@media (min-width: 800px){
 .images-sidebar {
     display: flex;
     flex-direction: column;
@@ -20,9 +21,15 @@
     display: flex;
     align-items: start;
     justify-content: center;
-    padding:0px 150px
-}
+    padding:0px 150px;
 
+}
+.image-container{
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    width:100%
+}
 
 
 .main-image-container {
@@ -69,4 +76,149 @@
 }
 .add-to-cart-btn:hover{
     transform: scale(1.05);
+}
+}
+@media (max-width: 768px){
+    .product-detail-container{
+        flex-direction: column;
+
+    }
+}
+.post-review {
+    padding: 20px 30px;
+    width: 40%;
+
+}
+
+.post-review button {
+    background-color: darkgrey;
+    color: white;
+    box-shadow: 2px 2px 2px black;
+    width: 40%;
+    height: 30px;
+    font-size: 13px;
+    border-radius: 2px;
+
+}
+.post-review button:hover{
+    background-color: grey
+}
+
+
+.reviews-container {
+    margin-top: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 50px 150px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+}
+
+.review {
+    padding: 15px;
+    background: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.review:nth-child(odd) {
+    background: #f7f7f7;
+}
+
+.review > div {
+    margin-bottom: 5px;
+}
+
+
+.review:first-child::before {
+    content: "Newest Review";
+    font-size: 0.75em;
+    color: #28a745;
+    display: block;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .product-detail-container, .image-container, .product-info, .reviews-container {
+        padding: 0 15px;
+    }
+
+    .images-sidebar {
+        overflow-x: auto;
+        flex-direction: row;
+        max-width: 100%;
+        max-height: unset;
+        white-space: nowrap;
+        padding-bottom: 10px;
+    }
+
+    .images-sidebar img {
+        display: inline-block;
+        width: 80px;
+        margin-right: 10px;
+    }
+
+    .product-info, .reviews-container, .post-review {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .main-image-container img {
+        width: 100%;
+    }
+
+    .post-review button {
+        width: 100%;
+    }
+}
+button:hover, button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+}
+
+.star-rating {
+    display: inline-block;
+    font-size: 20px;
+    color: orange;
+}
+
+.sort-dropdown {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+    gap:10px
+  }
+  .sort-dropdown label {
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .sort-dropdown select {
+    width: 30%;
+    padding: 8px 30px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    appearance: none;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 24px;
+    display: flex;
+    justify-content: center;
+
+  }
+
+
+
+.review-header{
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    gap: 10px;
 }

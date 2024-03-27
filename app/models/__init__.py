@@ -4,7 +4,7 @@ from .user import User
 from .shop import Shop
 from .product import Product
 # from .cart import Cart
-# from .review import Review
+from .review import Review
 # from .transaction import Transaction
 # from .transaction_item import TransactionItem
 

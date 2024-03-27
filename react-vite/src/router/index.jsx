@@ -64,6 +64,7 @@ export const router = createBrowserRouter([
         element:<CreateProduct/>
       },
 
+
     ],
   },
 ]);

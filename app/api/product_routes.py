@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Shop,Product,db,Review
-from app.forms import ProductForm,ShopForm,ReviewForm
+from app.models import Shop,Product,db,Review,Cart
+from app.forms import ProductForm,ShopForm,ReviewForm,CartForm
 from helper import upload_file_to_s3, get_unique_filename
 
 
@@ -120,26 +120,19 @@ def get_product(product_id):
         return jsonify({'error': 'Product not found'}), 404
 
 
-
-
 #post new review for specify productId
 @login_required
 @product_routes.route('/<int:product_id>/newreview',methods=['POST'])
 def create_review(product_id):
-    # prduct = Product.query.get(product_id)
-
     form = ReviewForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    # product_id = form.data['product_id']
     data = request.get_json()
-    print(data,'this is data ===>')
     rating = data.get('rating')
     comment = data.get('comment')
-
     product = Product.query.get(product_id)
     print('product===>',product)
     if form.validate_on_submit():
-        # product = Product.query.filter_by(id = form.data['product_id']).first()
+
         if not product:
             return {"errors": {"message": "Product couldn't be found"}}, 404
         user = current_user.to_dict()
@@ -156,3 +149,30 @@ def create_review(product_id):
     else:
         return jsonify({'errors': form.errors}), 400
 
+#Add an Item to the Shopping Cart for current user
+
+@product_routes.route('/<int:product_id>/addcart', methods=['POST'])
+def add_to_cart(product_id):
+    form =CartForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+    data = request.get_json()
+    print(data,'this is data ===>')
+    quantity = data.get('quantity', 1)
+
+    product = Product.query.get(product_id)
+    user_id = current_user.id if current_user.is_authenticated else 1
+    if form.validate_on_submit():
+        try:
+            if not product:
+                return {"errors": {"message": "Product couldn't be found"}}, 404
+            existing_item = Cart.query.filter_by(user_id=user_id, product_id=product_id).first()
+            if existing_item:
+                existing_item.quantity += int(quantity)
+            else:
+                new_item = Cart(user_id=user_id, product_id=product_id, quantity=int(quantity))
+                db.session.add(new_item)
+            db.session.commit()
+            return jsonify({'message': 'Item added or updated in cart'}), 200
+        except Exception as e:
+            return jsonify({'error': 'Unable to process request', 'details': str(e)}), 500

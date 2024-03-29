@@ -18,16 +18,14 @@ def get_all_reviews():
 @login_required
 def get_reviews_for_current_user():
     reviews = current_user.reviews
-    # print(current_user.id,'this is current user=>')
     reviews_dict = [review.to_dict() for review in reviews]
     return {'reviews':reviews_dict}
 
 #get product's reviews
 @review_routes.route('/<int:product_Id>',methods=['GET'])
-@login_required
+
 def get_reviews_for_product(product_Id):
     reviews = Review.query.filter(product_Id == Review.product_id).all()
-    # print('this is review====>',Review.product_id)
     reviews_dict = [review.to_dict() for review in reviews]
     return {'reviews':reviews_dict}
 

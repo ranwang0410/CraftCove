@@ -37,7 +37,7 @@ function Navigation() {
         }
         <div className="nav-item"><ProfileButton /></div>
 
-        <button className="shopping-cart-icon" onClick={() => alert('Feature coming soon')} title='shopping cart' style={{fontSize:'15px'}}>
+        <button className="shopping-cart-icon" onClick={() => navigate('/carts')} title='shopping cart' style={{fontSize:'15px'}}>
           <i className="fas fa-shopping-cart"></i>
         </button>
       </div>

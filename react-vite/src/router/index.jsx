@@ -12,7 +12,7 @@ import DeleteModal from '../components/DeleteModal/DeleteModal';
 import UpdateProduct from '../components/Product/UpdateProduct';
 import CreateProduct from '../components/Product/CreateProduct';
 import GetProductByShopId from '../components/Product/GetProductByShopId';
-
+import Cart from '../components/Cart/cart'
 export const router = createBrowserRouter([
   {
     path:'/',
@@ -63,7 +63,10 @@ export const router = createBrowserRouter([
         path:'/shop/:shopId/products/create-product',
         element:<CreateProduct/>
       },
-
+      {
+        path:'/carts',
+        element:<Cart/>
+      }
 
     ],
   },

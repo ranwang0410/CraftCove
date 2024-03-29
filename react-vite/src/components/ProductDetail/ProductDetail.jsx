@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getProductDetail } from "../../redux/product";
 import './ProductDetail.css'
-import { getReviewsByProductId, createReview, editReview, deleteReview } from "../../redux/review";
+import { getReviewsByProductId, createReview, deleteReview } from "../../redux/review";
 import { useModal } from '../../context/Modal'
 import ReviewFormModal from "../ReviewFormModal/ReviewFormModal";
 import ReviewUpdateFormModal from "../ReviewFormModal/ReviewUpdateFormModal";
 import DeleteReviewModal from '../ReviewFormModal/DeleteReviewModal'
-
+import { addToCart } from "../../redux/cart";
 
 const StarRatingDisplay = ({ rating }) => {
     const fullStars = Math.floor(rating);
@@ -30,17 +30,22 @@ export default function ProductDetail() {
     const { productId } = useParams();
     const dispatch = useDispatch();
     const productDetails = useSelector(state => state.product.productDetail);
+    console.log(productDetails, 'thisi s product details===>')
     const [selectedImage, setSelectedImage] = useState('');
     const reviews = useSelector(state => state.review.reviews)
-    console.log(reviews, 'here')
+
     const [hasUserPostedReview, setHasUserPostedReview] = useState(false);
     const [averageRating, setAverageRating] = useState(0);
     const [totalReviews, setTotalReviews] = useState(0);
     const sessionUser = useSelector(state => state.session.user);
     const isLoggedIn = Boolean(sessionUser);
     const isOwner = sessionUser && sessionUser.id === productDetails?.shop?.user_id;
+    // console.log(sessionUser,'session user')
     const [sortOption, setSortOption] = useState('default');
 
+    const navigate = useNavigate()
+
+    const [showAddedToCartModal, setShowAddedToCartModal] = useState(false);
 
     useEffect(() => {
         dispatch(getProductDetail(productId));
@@ -49,7 +54,8 @@ export default function ProductDetail() {
 
     useEffect(() => {
         if (reviews && sessionUser) {
-            const userReview = reviews?.reviews?.find(review => review.user.id === sessionUser.id);
+
+            const userReview = reviews?.reviews?.find(review => review.user_id === sessionUser.id);
             setHasUserPostedReview(Boolean(userReview));
         }
     }, [reviews, sessionUser]);
@@ -87,11 +93,7 @@ export default function ProductDetail() {
         closeModal();
         dispatch(getReviewsByProductId(productId))
     };
-    const handleReviewUpdate = async (updateReviewData) => {
-        await dispatch(editReview(updateReviewData.id, updateReviewData))
-        // closeModal()
-        dispatch(getReviewsByProductId(productId))
-    }
+
 
     const openReviewForm = () => {
         if (productId) {
@@ -108,7 +110,8 @@ export default function ProductDetail() {
         setModalContent(
             <ReviewUpdateFormModal
                 review={review}
-                onReviewUpdate={() => handleReviewUpdate(review)} />
+
+            />
         )
     }
 
@@ -142,6 +145,27 @@ export default function ProductDetail() {
             }
         });
     };
+
+    const handleAddToCart = async () => {
+        const itemData = {
+            productId: productDetails.id,
+            quantity: 1
+        };
+        await dispatch(addToCart(productId, itemData));
+        setShowAddedToCartModal(true);
+    };
+    const closeModalHandler = () => {
+        setShowAddedToCartModal(false);
+    };
+    const addedToCartModalContent = (
+        <div className="modal-overlay" onClick={closeModalHandler}>
+            <div className="added-to-cart-modal">
+                {selectedImage && <img src={selectedImage} alt="Product" style={{ maxWidth: '100px', marginBottom: '10px' }} />}
+                <div className="cart-text">Item added to cart.</div>
+                <button className='viewcart-btn' onClick={() => navigate('/carts')}>View Cart & Checkout</button>
+            </div>
+        </div>
+    )
     return (
         <>
             <div className="product-detail-container">
@@ -158,9 +182,9 @@ export default function ProductDetail() {
                         {productDetails.image9 && <img src={productDetails.image9} onClick={() => handleImageClick(productDetails.image9)} alt={productDetails.product_name} />}
                     </div>
                     <div className="main-image-container">
-                        {/* <span><i className='fas fa-angle-left'></i></span> */}
+
                         <img src={selectedImage ? selectedImage : null} alt={productDetails.product_name} />
-                        {/* <span><i className='fas fa-angle-right'></i></span> */}
+
                     </div>
 
                 </div>
@@ -168,20 +192,19 @@ export default function ProductDetail() {
                     <h1><i className="fa-solid fa-dollar-sign" />{productDetails.price}</h1>
                     <h2>{productDetails.product_name}</h2>
                     <h2>{productDetails.shop ? productDetails.shop.shopname : 'No shop info'}</h2>
-                    <button className="add-to-cart-btn" onClick={() => alert('Feature coming soon')}>Add to cart</button>
+                    <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to cart</button>
                 </div>
+                {showAddedToCartModal && addedToCartModalContent}
             </div>
 
             <div className="reviews-container">
 
                 {Array.isArray(reviews.reviews) && reviews.reviews.length > 0 ? (
-
-
                     <>
                         <div className="review-header">
-                        <div>{totalReviews} Reviews</div>
-                        <div className="average-rating"><StarRatingDisplay rating={Number(averageRating)} /></div></div>
-                        {/* <div>Average Rating: {averageRating}</div> */}
+                            <div>{totalReviews} Reviews</div>
+                            <div className="average-rating"><StarRatingDisplay rating={Number(averageRating)} /></div></div>
+
                         <div className="sort-dropdown">
                             <label htmlFor="sortReviews">Sort by: </label>
                             <select id="sortReviews" value={sortOption} onChange={e => setSortOption(e.target.value)}>
@@ -205,7 +228,10 @@ export default function ProductDetail() {
                                     )}
                                     {sessionUser && sessionUser.id === review.user.id && (
                                         <button className='deleteshop-button' onClick={() => openDeleteModal(review.id)}>Delete</button>
+
                                     )}
+
+
                                 </div>
                             ))}
                     </>
@@ -214,6 +240,7 @@ export default function ProductDetail() {
                 )}
 
             </div>
+
             {isLoggedIn && !isOwner && !hasUserPostedReview && (
                 <div className="post-review">
                     <button className='post-review-button' onClick={openReviewForm}>Post Your Review</button>

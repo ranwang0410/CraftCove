@@ -5,7 +5,7 @@ import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import SignupFormModal from "../SignupFormModal/SignupFormModal";
 import { useNavigate } from "react-router-dom";
-
+// import { getCartItems } from "../../redux/cart";
 function LoginFormModal() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
@@ -18,7 +18,9 @@ function LoginFormModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+
     const serverResponse = await dispatch(
+
       thunkLogin({
         email,
         password,
@@ -30,6 +32,7 @@ function LoginFormModal() {
 
     } else {
       setErrors({});
+      // await dispatch(getCartItems());
       closeModal();
       navigate('/')
     }

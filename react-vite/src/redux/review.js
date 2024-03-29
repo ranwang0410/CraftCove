@@ -76,19 +76,20 @@ export const editReview = (reviewId,reviewData)=>async(dispatch)=>{
     if(response.ok){
       const updatedReview = await response.json();
 
-      // dispatch(updateReview(updatedReview))
       dispatch({
         type: 'UPDATE_REVIEW',
         payload: { id: reviewId, updatedReview },
       });
-      return updatedReview
+      return updatedReview ;
     }else{
+
       throw new Error('Failed to update review');
     }
 
   }catch(error){
     console.error('Error edit a review:',error);
-    return {error:error.message}
+    // return {error:error.message}
+    return  { ok: false, error: { message: 'Could not update the review. Please try again.' } };
   }
 }
 export const deleteReview = (id) => async (dispatch) => {
@@ -100,7 +101,7 @@ export const deleteReview = (id) => async (dispatch) => {
     dispatch(removeReview(id));
   }
 };
-  const initialState = {reviews:[]}
+  const initialState = {reviews:{}}
   export default function reviewsReducer(state=initialState,action){
     switch (action.type){
         case SET_REVIEWS:
@@ -111,11 +112,10 @@ export const deleteReview = (id) => async (dispatch) => {
             reviews: Array.isArray(state.reviews) ? [...state.reviews, action.review] : [action.review]
           }
         case UPDATE_REVIEW: {
+          return{...state,
+            reviews: state.reviews.map((review) =>
+                review.id === action.payload.id ? action.payload.updatedReview : review)}
 
-          return {
-            ...state,
-            [action.reviews.id]:action.updateReview
-            }
           }
         case REMOVE_REVIEW:{
           const newState = { ...state };

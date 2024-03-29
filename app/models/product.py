@@ -32,7 +32,7 @@ class Product(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
 
     shop = db.relationship('Shop', back_populates='products')
-    # cart = db.relationship('Cart', back_populates='product',cascade='all, delete-orphan')
+    cart = db.relationship('Cart', back_populates='product',cascade='all, delete-orphan')
     # like = db.relationship('Like', back_populates='product',cascade='all, delete-orphan')
     review = db.relationship('Review', back_populates='product',cascade='all, delete-orphan')
     # transaction_item = db.relationship('TransactionItem', back_populates='product',cascade='all, delete-orphan')

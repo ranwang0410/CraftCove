@@ -82,7 +82,8 @@ function LoginFormModal() {
             </div>
 
             <button type="submit" id="btn-submit">Sign In</button>
-            <button className="demo-button" onClick={() => { dispatch(thunkLogin({ email: 'demo@aa.io', password: 'password' })); closeModal() }}>Demo User</button>
+            <button className="demo-button" onClick={() => { dispatch(thunkLogin({ email: 'demo@aa.io', password: 'password' })); closeModal() }}>Demo User1</button>
+            <button className="demo-button" onClick={() => { dispatch(thunkLogin({ email: 'marnie@aa.io', password: 'password' })); closeModal() }}>Demo User2</button>
           </form>
         </div>
       </div>

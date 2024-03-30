@@ -9,7 +9,6 @@ export default function GetAllProduct() {
 
     const dispatch = useDispatch();
     const products = useSelector(state => state.product.products) || [];
-
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,7 +32,9 @@ export default function GetAllProduct() {
                 {products?.map(product => (
                     <div key={product.id} className="product-item" onClick={() => handleProductClick(product.id)}>
                         <img src={product.image1 ? product.image1 : null} alt={product.product_name} />
-                        <h3>{product.product_name}</h3><h4> {product.shop ? product.shop.shopname : 'No shop info'}</h4>
+                        <h3>{product.product_name}</h3>
+
+                        <div className='shop_name'> <i className='fas fa-award'></i>{product.shop ? product.shop.shopname : 'No shop info'}</div>
                         <p><i className="fa-solid fa-dollar-sign"/>{product.price}</p>
 
                     </div>

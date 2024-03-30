@@ -1,4 +1,4 @@
-import { useNavigate, useParams, NavLink } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getProductsByShopId } from "../../redux/product";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -61,20 +61,21 @@ export default function GetProductByShopId() {
     return (
         <div className='landing-page'>
             <div className="up-down">
-            <div className="create-product"><button><NavLink to={`/shop/${shopId}/products/create-product`}>Create product</NavLink></button></div>
+                {/* <div className="create-product"><button><NavLink to={`/shop/${shopId}/products/create-product`}>Create product</NavLink></button></div> */}
+                <div className="create-product"><button onClick={() => navigate(`/shop/${shopId}/products/create-product`)}>Create Product</button></div>
                 <div className="product-list-shopid">
                     {products ? (
 
-                            products?.map((product) => (
-                                <div key={product.id} className="product-item-shopid">
-                                    <div className="product-spec" onClick={() => handleProductClick(product.id)}>
-                                        <img src={product.image1 ? product.image1 : undefined} alt={product.product_name} />
-                                        <h3>{product.product_name}</h3>
-                                        <p style={{ fontWeight: 'bold' }}>${product.price}</p>
-                                    </div>
-                                    <button onClick={() => openSettings(product)} className="setting-btn"><i className="fa fa-cog" aria-hidden="true"></i><i className="fa fa-caret-down" aria-hidden="true"></i></button>
+                        products?.map((product) => (
+                            <div key={product.id} className="product-item-shopid">
+                                <div className="product-spec" onClick={() => handleProductClick(product.id)}>
+                                    <img src={product.image1 ? product.image1 : undefined} alt={product.product_name} />
+                                    <h3>{product.product_name}</h3>
+                                    <p style={{ fontWeight: 'bold' }}>${product.price}</p>
                                 </div>
-                            ))
+                                <button onClick={() => openSettings(product)} className="setting-btn"><i className="fa fa-cog" aria-hidden="true"></i><i className="fa fa-caret-down" aria-hidden="true"></i></button>
+                            </div>
+                        ))
 
                     ) : (
                         <p>No products found for this shop.</p>
@@ -90,12 +91,12 @@ export default function GetProductByShopId() {
 
                     {showDeleteModal && selectedProduct ? (
                         <>
-                        <div className="overlay" onClick={handleCloseDeleteModal}></div>
-                        <DeleteModal
-                            productId={selectedProduct.id}
-                            onCancel={handleCloseDeleteModal}
-                            afterDelete={refreshProducts}
-                        />
+                            <div className="overlay" onClick={handleCloseDeleteModal}></div>
+                            <DeleteModal
+                                productId={selectedProduct.id}
+                                onCancel={handleCloseDeleteModal}
+                                afterDelete={refreshProducts}
+                            />
                         </>
                     ) : null}
                 </div>

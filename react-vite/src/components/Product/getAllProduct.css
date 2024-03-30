@@ -42,20 +42,5 @@
     font-size: 20px;
   }
 
-  /* @media (min-width:800px) {
-    .product-list {
-      grid-template-columns: repeat(4, 1fr);
-    }
-    .landing-page{
-      padding:60px 100px
-    }
-  }
-
-  @media (max-width: 800px) {
-    .product-list {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-  } */
 
 

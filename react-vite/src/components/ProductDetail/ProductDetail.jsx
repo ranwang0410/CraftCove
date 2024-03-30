@@ -9,6 +9,7 @@ import ReviewFormModal from "../ReviewFormModal/ReviewFormModal";
 import ReviewUpdateFormModal from "../ReviewFormModal/ReviewUpdateFormModal";
 import DeleteReviewModal from '../ReviewFormModal/DeleteReviewModal'
 import { addToCart } from "../../redux/cart";
+import LoginFormModal from "../LoginFormModal";
 
 const StarRatingDisplay = ({ rating }) => {
     const fullStars = Math.floor(rating);
@@ -147,12 +148,16 @@ export default function ProductDetail() {
     };
 
     const handleAddToCart = async () => {
-        const itemData = {
-            productId: productDetails.id,
-            quantity: 1
-        };
-        await dispatch(addToCart(productId, itemData));
-        setShowAddedToCartModal(true);
+        if (!sessionUser) {
+            setModalContent(<LoginFormModal />)
+        } else {
+            const itemData = {
+                productId: productDetails.id,
+                quantity: 1
+            };
+            await dispatch(addToCart(productId, itemData));
+            setShowAddedToCartModal(true);
+        }
     };
     const closeModalHandler = () => {
         setShowAddedToCartModal(false);
@@ -160,12 +165,16 @@ export default function ProductDetail() {
     const addedToCartModalContent = (
         <div className="modal-overlay" onClick={closeModalHandler}>
             <div className="added-to-cart-modal">
-                {selectedImage && <img src={selectedImage} alt="Product" style={{ maxWidth: '100px', marginBottom: '10px' }} />}
+                {selectedImage && <img src={selectedImage} alt="Product" style={{ maxWidth: '300px', marginBottom: '10px' }} />}
                 <div className="cart-text">Item added to cart.</div>
                 <button className='viewcart-btn' onClick={() => navigate('/carts')}>View Cart & Checkout</button>
             </div>
         </div>
     )
+
+    const handleShopNameClick = (shopId) => {
+        navigate(`/${shopId}/products`);
+    };
     return (
         <>
             <div className="product-detail-container">
@@ -189,10 +198,16 @@ export default function ProductDetail() {
 
                 </div>
                 <div className="product-info">
-                    <h1><i className="fa-solid fa-dollar-sign" />{productDetails.price}</h1>
-                    <h2>{productDetails.product_name}</h2>
-                    <h2>{productDetails.shop ? productDetails.shop.shopname : 'No shop info'}</h2>
-                    <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to cart</button>
+                    <div className="product-upper">
+                        <h1><i className="fa-solid fa-dollar-sign" />{productDetails.price}</h1>
+                        <h2>{productDetails.product_name}</h2>
+                        <div className='name' onClick={() => handleShopNameClick(productDetails.shop_id)}><i className='fas fa-award' />     {productDetails.shop ? productDetails.shop.shopname : 'No shop info'}</div>
+                        <div className="average-rating"><StarRatingDisplay rating={Number(averageRating)} /></div>
+                        <button className="add-to-cart-btn" onClick={handleAddToCart}>Add to cart</button>
+                    </div>
+                    {/* {console.log(productDetails.desc,'desc')} */}
+                    {/* <div className="product-lower">
+                    <div className="desc">{productDetails.desc}</div></div> */}
                 </div>
                 {showAddedToCartModal && addedToCartModalContent}
             </div>
@@ -203,17 +218,25 @@ export default function ProductDetail() {
                     <>
                         <div className="review-header">
                             <div>{totalReviews} Reviews</div>
-                            <div className="average-rating"><StarRatingDisplay rating={Number(averageRating)} /></div></div>
-
-                        <div className="sort-dropdown">
-                            <label htmlFor="sortReviews">Sort by: </label>
-                            <select id="sortReviews" value={sortOption} onChange={e => setSortOption(e.target.value)}>
-                                <option className='option' value="default">Default</option>
-                                <option value="mostRecent">Most Recent</option>
-                                <option value="highestRating">Highest Rating</option>
-                                <option value="lowestRating">Lowest Rating</option>
-                            </select>
+                            <div className="average-rating"><StarRatingDisplay rating={Number(averageRating)} /></div>
                         </div>
+                        <div className="review-actions">
+                            {isLoggedIn && !isOwner && !hasUserPostedReview && (
+                                <div className="post-review-container">
+                                    <button className='post-review-button' onClick={openReviewForm}>Post Your Review</button>
+                                </div>
+                            )}
+                            <div className="sort-dropdown">
+                                <label htmlFor="sortReviews">Sort by: </label>
+                                <select id="sortReviews" value={sortOption} onChange={e => setSortOption(e.target.value)}>
+                                    <option value="default">Default</option>
+                                    <option value="mostRecent">Most Recent</option>
+                                    <option value="highestRating">Highest Rating</option>
+                                    <option value="lowestRating">Lowest Rating</option>
+                                </select>
+                            </div>
+                        </div>
+
                         {sortedReviews()
                             // .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                             .map((review) => (
@@ -224,10 +247,10 @@ export default function ProductDetail() {
                                     <div>{review.user.username}</div>
                                     <div>{formatDate(review.created_at)}</div>
                                     {sessionUser && sessionUser.id === review.user.id && (
-                                        <button onClick={() => openUpdateReviewForm(review)}>Update</button>
+                                        <button className="update-review" onClick={() => openUpdateReviewForm(review)}>Update</button>
                                     )}
                                     {sessionUser && sessionUser.id === review.user.id && (
-                                        <button className='deleteshop-button' onClick={() => openDeleteModal(review.id)}>Delete</button>
+                                        <button className='update-review' onClick={() => openDeleteModal(review.id)}>Delete</button>
 
                                     )}
 
@@ -241,11 +264,6 @@ export default function ProductDetail() {
 
             </div>
 
-            {isLoggedIn && !isOwner && !hasUserPostedReview && (
-                <div className="post-review">
-                    <button className='post-review-button' onClick={openReviewForm}>Post Your Review</button>
-                </div>
-            )}
         </>
     )
 }

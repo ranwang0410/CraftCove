@@ -84,15 +84,11 @@ def delete_shop(id):
 
 #get products by shopId
 @shop_routes.route('/<int:shop_id>/products',methods=['GET'])
-@login_required
+# @login_required
 def get_product_by_shopId(shop_id):
     products = Product.query.filter_by(shop_id=shop_id).all()
     return {'products': [product.to_dict() for product in products]}
 
 
 
-@shop_routes.route('/<int:shop_id>/products')
-def get_products_by_shop(shop_id):
-    products = Product.query.filter_by(shop_id=shop_id).all()
-    products_data = [product.to_dict() for product in products]
-    return jsonify(products_data)
+

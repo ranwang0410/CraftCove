@@ -13,6 +13,7 @@ import UpdateProduct from '../components/Product/UpdateProduct';
 import CreateProduct from '../components/Product/CreateProduct';
 import GetProductByShopId from '../components/Product/GetProductByShopId';
 import Cart from '../components/Cart/cart'
+import ShopProductDetails from '../components/ProductDetail/ShopProductsDetails'
 export const router = createBrowserRouter([
   {
     path:'/',
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
       {
         path:'/shop/:shopId/products',
         element:<GetProductByShopId/>
+      },
+      {
+        path:'/:shopId/products',
+        element:<ShopProductDetails/>
       },
       {
         path:'/delete-product',

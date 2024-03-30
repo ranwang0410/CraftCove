@@ -12,7 +12,7 @@ export const setCarts = (cartItems) => ({
 
 export const getCartItems = () => async (dispatch) => {
     try {
-        const response = await fetch(`/api/carts`)
+        const response = await csrfFetch(`/api/carts/current`)
         if (response.ok) {
             const cartItems = await response.json()
             dispatch(setCarts(cartItems))

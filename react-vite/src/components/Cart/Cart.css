@@ -30,7 +30,9 @@
     padding:0px 20px;
     align-items: left;
 }
-
+.cart-item-left img{
+    cursor: pointer;
+}
 .cart-item-right{
     margin-top: 15px;
 }
@@ -68,7 +70,125 @@
 }
 .cart-product-name{
     font-size: 18px;
+    cursor: pointer;
 }
-.remove-button{
+.cart-product-name:hover{
+    text-decoration: underline;
+}
+.remove-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    text-decoration: underline;
     width: 70px;
+    transition: transform 0.2s;
+}
+
+.remove-button:hover {
+    text-decoration: none;
+    background-color: lightgrey;
+    transform: scale(1.05);
+}
+
+.cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+    text-align: center;
+    gap:20px
+
+}
+.empty-text{
+
+    font-size: 30px;
+}
+.cart-empty a{
+    color:black;
+
+}
+
+.quantitly-remove{
+    display: flex;
+    margin: 15px 0px;
+}
+
+
+.quantity select {
+
+    cursor: pointer;
+    padding: 8px 30px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 24px;
+    appearance: none;
+
+}
+.select-quantity{
+    transition: transform 0.2s;
+}
+.select-quantity:hover{
+    transform: scale(1.05);
+}
+.name{
+    font-size: 15px;
+    color:dimgray;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.name:hover{
+    transform: scale(1.05);
+}
+@media (max-width: 800px) {
+    .cart-container {
+        padding: 0 15px;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cart-item-left,
+    .cart-item-right {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .cart-item-price,
+    .quantitly-remove {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .remove-button {
+        padding: 5px 10px;
+        font-size: 14px;
+    }
+
+    .cart-summary {
+        margin-top: 20px;
+    }
+
+    .cart-summary-total {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .add-to-cart-btn {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+
 }

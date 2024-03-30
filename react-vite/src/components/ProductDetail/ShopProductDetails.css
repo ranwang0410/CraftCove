@@ -1,0 +1,11 @@
+
+.shop1{
+    font-size: 30px;
+    padding:0px 300px
+}
+.product-shopid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 50px;
+    padding: 10px 200px;
+}

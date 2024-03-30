@@ -56,6 +56,7 @@ class Product(db.Model):
             'image8': self.image8,
             'image9': self.image9,
             'categorie': self.categorie,
+            # 'review':self.review.to_dict(),
             'created_at': self.created_at,
             'updated_at': self.updated_at
             }

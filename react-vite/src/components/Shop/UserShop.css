@@ -1,9 +1,12 @@
+
 .shopname{
     color:darkgrey;
     font-size: 25px;
     cursor: pointer;
     transition: transform 0.2s;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color:antiquewhite;
+    width: 100%;
 }
 .shopname:hover{
     transform: scale(1.05);
@@ -79,4 +82,22 @@
 .no-shops-message {
     display: flex;
     justify-content: center;
+  }
+  @media (max-width: 800px) {
+    .shop {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .shop-left, .shopurl {
+        margin:10px
+    }
+
+    .shop-btn {
+        padding: 5px;
+    }
+
+    .shop-btn button {
+        margin-bottom: 5px;
+    }
   }

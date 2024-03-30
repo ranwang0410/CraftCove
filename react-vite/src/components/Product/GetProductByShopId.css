@@ -13,6 +13,7 @@
     transition: transform 0.2s;
     display: flex;
     flex-direction: column;
+
 }
 
 .product-item-shopid:hover {
@@ -79,17 +80,4 @@ h3, h4, p {
     padding: 15px;
     flex: 1;
 }
-/* @media (min-width: 800px) {
-    .product-list-shopid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    .landing-page {
-        padding: 60px 100px;
-    }
-}
 
-@media (max-width: 800px) {
-    .product-list-shopid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-} */

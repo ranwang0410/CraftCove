@@ -5,7 +5,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import './ProfileButton.css'
 import { useNavigate} from 'react-router-dom'
-// import {clearCart} from '../../redux/cart'
+
 function ProfileButton() {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -29,7 +29,6 @@ function ProfileButton() {
     e.preventDefault();
     dispatch(thunkLogout());
     setShowMenu(false);
-    // dispatch(clearCart())
     navigate('/')
   };
 

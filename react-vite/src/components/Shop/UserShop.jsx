@@ -14,7 +14,6 @@ export default function UserShops() {
     const sessionUser = useSelector((state) => state.session.user);
     const userShops = useSelector((state) => state.shop.userShops);
 
-    // const [tooltipText, setTooltipText] = useState('Copy link');
     const { closeModal, setModalContent } = useModal()
 
     useEffect(() => {
@@ -22,15 +21,6 @@ export default function UserShops() {
             dispatch(fetchShopsByUserId());
         }
     }, [dispatch, sessionUser]);
-
-    // useEffect(() => {
-    //     const tooltipInit = userShops.reduce((acc, shop) => ({
-    //         ...acc,
-    //         [shop.id]: 'Copy link'
-    //     }), {});
-    //     setTooltipText(tooltipInit);
-    // }, [userShops]);
-
 
     const handleDelete = async (shopId) => {
         await dispatch(removeShop(shopId));
@@ -49,19 +39,6 @@ export default function UserShops() {
     const handleUpdateShopSuccess = () => {
         dispatch(fetchShopsByUserId());
     };
-
-    // const copyToClipboard = (text, shopId) => {
-    //     navigator.clipboard.writeText(text).then(() => {
-    //         setTooltipText(prevState => ({ ...prevState, [shopId]: 'Copied' }));
-
-    //         setTimeout(() => {
-    //             setTooltipText(prevState => ({ ...prevState, [shopId]: 'Copy link' }));
-    //         }, 2000);
-    //     }).catch(err => {
-    //         console.error('Failed to copy: ', err);
-    //     });
-    // };
-
 
     if (!sessionUser) {
         return null
@@ -97,12 +74,6 @@ export default function UserShops() {
                                 <div className="shopurl">
                                     <span onClick={() => navigate(`/shop/${shop.id}/products`)}>{shop.shopname}.craftcove.com<button style={{padding:'3px',margin:'0px 8px'}}>visit products</button></span>
 
-                                    {/* <span
-                                        onClick={() => copyToClipboard(`${shop.shopname}.craftcove.com`, shop.id)}
-                                        onMouseEnter={() => setTooltipText(prev => ({ ...prev, [shop.id]: 'Copy link' }))}
-                                        style={{ cursor: 'pointer' }}>
-                                        <i className="fas fa-link"></i> <span>{tooltipText[shop.id]}</span>
-                                    </span> */}
                                 </div>
                             </div>
                         </div>

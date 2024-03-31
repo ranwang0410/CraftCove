@@ -31,7 +31,7 @@ export default function ProductDetail() {
     const { productId } = useParams();
     const dispatch = useDispatch();
     const productDetails = useSelector(state => state.product.productDetail);
-    console.log(productDetails, 'thisi s product details===>')
+    // console.log(productDetails, 'thisi s product details===>')
     const [selectedImage, setSelectedImage] = useState('');
     const reviews = useSelector(state => state.review.reviews)
 

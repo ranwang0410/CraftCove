@@ -13,7 +13,7 @@ const StarRating = ({ setRating }) => {
     };
 
     const handleClick = (rating) => {
-      console.log(`Star clicked: ${rating}`);
+
       setCurrentRating(rating);
       setRating(rating);
     };

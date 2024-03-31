@@ -48,7 +48,7 @@ export default function Cart() {
             <div className="cart-title">{totalNumberOfProducts} items in your cart</div>
             <div className="cart-container">
                 <div id="product-details">
-                    {console.log(cartItems)}
+
 
                     {cartItems?.map((item) => (
                         <>

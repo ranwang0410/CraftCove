@@ -130,7 +130,7 @@ def create_review(product_id):
     rating = data.get('rating')
     comment = data.get('comment')
     product = Product.query.get(product_id)
-    print('product===>',product)
+    # print('product===>',product)
     if form.validate_on_submit():
 
         if not product:
@@ -157,7 +157,7 @@ def add_to_cart(product_id):
     form['csrf_token'].data = request.cookies['csrf_token']
 
     data = request.get_json()
-    print(data,'this is data ===>')
+    # print(data,'this is data ===>')
     quantity = data.get('quantity', 1)
 
     product = Product.query.get(product_id)

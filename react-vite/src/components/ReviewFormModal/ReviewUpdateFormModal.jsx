@@ -70,7 +70,7 @@ const ReviewUpdateFormModal = ({ review}) => {
                 </div>
                 <button className="submit-review-button"
 
-                onClick={() => console.log('Button clicked')}
+                // onClick={() => console.log('Button clicked')}
                     type="submit"
                     // disabled={comment.length < 10 || rating === 0}
                 >Update Review

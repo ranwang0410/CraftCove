@@ -16,7 +16,7 @@ def get_cart_items():
 @cart_routes.route('/current', methods=['GET'])
 @login_required
 def get_cart_by_user():
-    print('current user====>',current_user.id)
+    # print('current user====>',current_user.id)
     user_carts = Cart.query.filter_by(user_id=current_user.id).all()
     user_carts_list = [cart.to_dict() for cart in user_carts]
     return jsonify(user_carts_list)
@@ -34,13 +34,13 @@ def update_item_quantity(item_id):
     if new_quantity <= 0:
         return jsonify({'error': 'Quantity must be greater than 0'}), 400
     if cart_item and new_quantity > 0:
-        print('here===')
+        # print('here===')
         cart_item.quantity = new_quantity
 
         db.session.commit()
         return jsonify(cart_item.to_dict()), 200
     else:
-        print('elese')
+        # print('elese')
         return jsonify({'error': 'Invalid request'}), 400
 
 # Delete an Item from the Shopping Cart
@@ -48,7 +48,7 @@ def update_item_quantity(item_id):
 # @login_required
 def delete_item_from_cart(item_id):
     cart_item = Cart.query.filter_by(id=item_id).first()
-    print(cart_item.id)
+    # print(cart_item.id)
     if cart_item:
         db.session.delete(cart_item)
         db.session.commit()

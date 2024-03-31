@@ -43,7 +43,7 @@ export default function CreateProduct() {
         if (image1) formData.append('image1', image1);
         formData.append('categorie', categorie);
         formData.append('desc', desc);
-        console.log('formData--->', formData.get('image1'))
+        // console.log('formData--->', formData.get('image1'))
         dispatch(createProduct((formData)))
             .then(() => {
                 navigate(`/shop/${shopId}/products`)
@@ -100,7 +100,7 @@ export default function CreateProduct() {
                 />
 
                 {errors.image1 && <div style={{ color: 'red' }}>{errors.image1}</div>}
-                <label htmlFor="categorie">Categorie:</label>
+                <label htmlFor="categorie">Category:</label>
                 <input
                     id="categorie"
                     type="text"

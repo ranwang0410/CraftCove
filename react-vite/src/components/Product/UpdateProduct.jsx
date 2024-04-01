@@ -67,7 +67,7 @@ export default function UpdateProduct() {
             .then(() => {
                 navigate(`/shop/${productDetail.shop_id}/products`);
             }).catch((error) => {
-                console.error('Failed to update the product', error);
+                console.error('Failed to update the product from updateProduct component catch error:', error);
                 setErrors({ general: 'The product name already exist.' });
             });
     }

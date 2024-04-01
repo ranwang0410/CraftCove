@@ -86,7 +86,7 @@ export const updateProductAction = (id, formData) => async (dispatch) => {
     dispatch(updateProduct(updatedProduct));
   } else {
     const errors = await response.json();
-    console.error('Failed to update product:', errors);
+    console.error('Failed to update product from redux:', errors);
     throw new Error(errors.errors);
   }}catch(error){
     console.error('Error updating product',error)

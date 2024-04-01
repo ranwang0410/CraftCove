@@ -5,18 +5,19 @@ from app.models import Product
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from helper import ALLOWED_EXTENSIONS
 
-def product_exists(form, field):
+# def product_exists(form, field):
 
-    if Product.query.filter(Product.product_name==field.data).first():
-        raise ValidationError('This product name already exists.')
+#     if Product.query.filter(Product.product_name==field.data).first():
+#         raise ValidationError('This product name already exists.')
 
 class ProductForm(FlaskForm):
     shop_id = IntegerField('Shop ID')
-    product_name = StringField('Product Name', validators=[DataRequired(),product_exists, Length(max=225)])
+    product_name = StringField('Product Name', validators=[DataRequired(), Length(max=225)])
     price = FloatField('Price', validators=[DataRequired(), NumberRange(min=0)])
     desc = StringField('description', validators=[Length(max=512, message="Length of description must be less than 512 characters")])
 
-    image1 = FileField("Image1 File", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    # image1 = FileField("Image1 File", validators=[FileRequired(), FileAllowed(list(ALLOWED_EXTENSIONS))])
+    image1 = FileField("Image1 File", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     # image2 = FileField("Image2 File", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     # image3 = FileField("Image3 File", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     # image4 = FileField("Image4 File", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])

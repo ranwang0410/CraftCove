@@ -109,7 +109,7 @@ export default function CreateProduct() {
                     required
                 />
                 {errors.categorie && <div style={{ color: 'red' }}>{errors.categorie}</div>}
-                <label htmlFor="desc">Descrition:</label>
+                <label htmlFor="desc">Description:</label>
                 <input
                     id="desc"
                     type="text"

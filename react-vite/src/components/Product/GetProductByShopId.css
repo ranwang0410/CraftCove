@@ -55,11 +55,13 @@ h3, h4, p {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     cursor: pointer;
     padding:3px 20px;
+    border:none
 
 }
 
 .create-product button:hover {
     transform: scale(1.05);
+    border:grey
   }
 
 .overlay {

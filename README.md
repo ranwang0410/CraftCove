@@ -15,6 +15,7 @@
 ![CSS3](https://img.shields.io/badge/-CSS-%231572B6?style=flat&logo=css3&logoColor=white)
 ![HTML5](https://img.shields.io/badge/-HTML5-%23E34F26?style=flat&logo=html5&logoColor=white)
 ![Render](https://img.shields.io/badge/-Render-%234678E1?style=flat&logo=render&logoColor=white)
+![Docker](https://img.shields.io/badge/-Docker-%230db7ed?style=flat&logo=docker&logoColor=white)
 
 # Features
 - Users can create, edit, and delete shops
